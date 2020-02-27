@@ -11,7 +11,7 @@ You can contribute in many ways:
 
 ### Report Bugs
 
-Report bugs at https://github.com/sweber15/eda_analysis/issues.
+Report bugs at https://github.com/UBC-MDS/edar/issues.
 
 If you are reporting a bug, please include:
 
@@ -31,13 +31,13 @@ and "help wanted" is open to whoever wants to implement it.
 
 ### Write Documentation
 
-eda_analysis could always use more documentation, whether as part of the
-official eda_analysis docs, in docstrings, or even on the web in blog posts,
+edar could always use more documentation, whether as part of the
+official edar docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
 ### Submit Feedback
 
-The best way to send feedback is to file an issue at https://github.com/sweber15/eda_analysis/issues.
+The best way to send feedback is to file an issue at https://github.com/UBC-MDS/edar/issues.
 
 If you are proposing a feature:
 
@@ -48,38 +48,32 @@ If you are proposing a feature:
 
 ## Get Started!
 
-Ready to contribute? Here's how to set up `eda_analysis` for local development.
+Ready to contribute? Here's how to set up `edar` for local development.
 
-1. Fork the `eda_analysis` repo on GitHub.
+1. Fork the `edar` repo on GitHub.
 
 2. Clone your fork locally:
 
 	```
-	git clone git@github.com:your_name_here/eda_analysis.git
+	git clone https://github.com/UBC-MDS/edar.git
 	```
 
-3. Install your local copy with Poetry, this is how you set up your fork for local development:
+3. Create a branch for local development:
 
 	```
-	cd eda_analysis/
-	poetry install
-	```
-
-4. Create a branch for local development:
-
-	```
+	cd edar/
 	git checkout -b name-of-your-bugfix-or-feature
 	```
 
    	Now you can make your changes locally.
 
-5. When you're done making changes, check that your changes pass the tests by running pytest
+4. When you're done making changes, check that your changes pass the tests by running pytest
 
 	```
-	poetry run pytest
+	check()
 	```
 
-6. Commit your changes and push your branch to GitHub:
+5. Commit your changes and push your branch to GitHub:
 
 	```
 	git add .
@@ -97,15 +91,8 @@ Before you submit a pull request, check that it meets these guidelines:
 2. If the pull request adds functionality, the docs should be updated. Put
    your new functionality into a function with a docstring, and add the
    feature to the list in README.md.
-3. The pull request should work for Python 3.7 & 3.8. Check https://github.com/sweber15/eda_analysis/pulls and make sure that the tests pass for all supported Python versions.
+3. The pull request should work for R 3.6+. Check https://github.com/UBC-MDS/edar/pulls and make sure that the tests pass for all supported R versions.
 
-## Tips
-
-To run a subset of tests:
-
-```
-py.test tests.test_eda_analysis
-```
 
 ## Deploying
 
@@ -120,4 +107,4 @@ A reminder for the maintainers on how to deploy:
 
 ## Code of Conduct
 
-Please note that the eda_analysis project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
+Please note that the edar project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
