@@ -67,7 +67,7 @@ Ready to contribute? Here's how to set up `edar` for local development.
 
    	Now you can make your changes locally.
 
-4. When you're done making changes, check that your changes pass the tests by running pytest
+4. When you're done making changes, check that your changes pass the tests by running 'check()`:
 
 	```
 	check()
@@ -92,18 +92,6 @@ Before you submit a pull request, check that it meets these guidelines:
    your new functionality into a function with a docstring, and add the
    feature to the list in README.md.
 3. The pull request should work for R 3.6+. Check https://github.com/UBC-MDS/edar/pulls and make sure that the tests pass for all supported R versions.
-
-
-## Deploying
-
-A reminder for the maintainers on how to deploy:
-
-- Ensure the following secrets are recorded on GitHub:
-	- CODECOV_TOKEN	
-	- PYPI_USERNAME
- 	- PYPI_PASSWORD	
-
- GitHub Actions should build and deploy to testPyPI when a pull request is merged into master.
 
 ## Code of Conduct
 
