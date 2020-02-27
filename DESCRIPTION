@@ -1,0 +1,16 @@
+Package: edar
+Title: EDA
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Isaac",
+           family = "Newton",
+           role = c("aut", "cre"),
+           email = "first.last@example.com",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Conduct initial EDA for exploring data in a dataframe.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Suggests: 
+    testthat (>= 2.1.0)
