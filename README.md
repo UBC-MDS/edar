@@ -1,4 +1,4 @@
-<img src=“img/edar.png” width=“150" align = “right”>
+<img src="img/edar.png" width="120" align = "right">
 
 # A Package for Exploratory Data Analysis (edar)
 
