@@ -27,8 +27,8 @@ describe_num_var <- function(dataframe, num_vars, plot=TRUE) {
 #' @param dataframe The dataframe to be inspected.
 #' @param num_vars A list of strings of column names containing numeric variables.
 #'
-#' @return ggplot object; a correlation matrix plot
-#' labelled with the correlation coefficients of -1 to 1 between
+#' @return ggplot object; a correlation matrix plot labelled
+#' with the correlation coefficients of -1 to 1 between
 #' each numeric column and other numeric columns in the dataframe.
 #'
 #' @export
