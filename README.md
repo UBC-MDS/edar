@@ -1,4 +1,8 @@
-# A Package for Exploratory Data Analysis
+# A Package for Exploratory Data Analysis (edar)
+
+<!-- badges: start -->
+
+<!-- badges: end -->
 
 ## Summary
 
@@ -18,14 +22,6 @@ analyzes each variable, and visualizes them with typical graphical techniques.
 5. `generate_report`: This is a wrapper function which generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe
 
 
-# edar
-
-<!-- badges: start -->
-
-<!-- badges: end -->
-
-The goal of edar is to conduct initial EDA for exploring data in a
-dataframe.
 
 ## Installation
 
