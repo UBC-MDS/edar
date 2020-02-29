@@ -21,3 +21,23 @@ describe_num_var <- function(dataframe, num_vars, plot=TRUE) {
   #TODO implement function
   print(num_vars)
 }
+
+#' Evaluates the correlation between the numeric columns of a given dataframe.
+#'
+#' @param dataframe The dataframe to be inspected.
+#' @param num_vars A list of strings of column names containing numeric variables.
+#'
+#' @return ggplot object; a correlation matrix plot
+#' labelled with the correlation coefficients of -1 to 1 between
+#' each numeric column and other numeric columns in the dataframe.
+#'
+#' @export
+#'
+#' @examples
+#' df <- data.frame(x = (c(2,3,4)), y= c(1,10,3))
+#' col_num <- list("x", "y")
+#' calc_cor(df, col_num)
+calc_cor <- function(dataframe, num_vars) {
+  #TODO implement function
+}
+
