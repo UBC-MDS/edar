@@ -1,9 +1,14 @@
 # Credits
 
 
-## Development Lead
+## Development Team
 
-* Group 4 (Isaac Newton) <sarah.weber@live.ca>
+|Contributor Name     | GitHub Username|
+|---------------------|-----------|
+|Min (Marvin) Cheng   | marvinmin|
+|Yi (James) Liu       | v5y8     |
+|Gaurav Sinha         | sgauravm |
+|Sarah Weber          | sweber15 |
 
 ## Contributors
 

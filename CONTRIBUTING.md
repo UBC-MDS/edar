@@ -96,3 +96,7 @@ Before you submit a pull request, check that it meets these guidelines:
 ## Code of Conduct
 
 Please note that the edar project is released with [this Contributor Code of Conduct](CONDUCT.md). By contributing to this project you agree to abide by its terms.
+
+## Attribution
+
+The CONTRIBUTING.md file was adapted from [Python's Cookiecutter package](https://github.com/audreyr/cookiecutter-pypackage). 
