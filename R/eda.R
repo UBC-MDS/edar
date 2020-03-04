@@ -56,7 +56,7 @@ describe_num_var <- function(dataframe, num_vars) {
 
   # Check the input num_vars is a vector of column names of dataframe
   if (!all(num_vars %in% colnames(dataframe))) {
-    stop("The second argument should be a subset of the cloumn names of the dataframe.")
+    stop("The argument 'num_vars' should be a subset of the column names of the dataframe.")
   }
 
   # Select the numeric variables to work with
