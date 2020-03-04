@@ -35,7 +35,7 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 #'
 #' @examples
 #' X <- tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
-#' num_vars <- c('height')
+#' num_vars <- c('height', 'width')
 #' result <- describe_num_var(X, num_vars)
 #' result$summary
 #' result$plot
