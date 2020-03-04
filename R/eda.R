@@ -1,6 +1,10 @@
 # author Group 4 Isaac Newton
 
+library(tibble)
 library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(testthat)
 
 #' This function generates an EDA report by plotting graphs and tables for the
 #' numeric variables, categorical variables, NA values and correlation in a dataframe
@@ -28,20 +32,73 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param num_vars vector of character strings of the names of the numeric variables.
-#' @param plot logical. If TRUE (the default) the distribution of the numeric variables will be plotted.
 #'
-#' @return tbl. A dataframe contains the statistical summary.
+#' @return list. A list containing a dataframe with a statistical summary and a ggplot object with histograms of numeric variables faceted by each variable.
 #'
 #' @export
 #'
 #' @examples
-#' X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
-#' num_vars <- c('height')
-#' describe_num_var(X, num_vars)
+#' X <- tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
+#' num_vars <- c('height', 'width')
+#' result <- describe_num_var(X, num_vars)
+#' result$summary
+#' result$plot
 #'
-describe_num_var <- function(dataframe, num_vars, plot=TRUE) {
-  #TODO implement function
-  print(num_vars)
+describe_num_var <- function(dataframe, num_vars) {
+  # Check the input dataframe is a dataframe
+  if (!is.data.frame(dataframe)) {
+    stop("The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
+  }
+
+  # Transform the input into tibble
+  dataframe <- as_tibble(dataframe)
+
+  # Chech the input num_vars is a vector of characters
+  if (!is.character(num_vars) | !is.vector(num_vars)) {
+    stop("The value of the argument 'num_vars' should be a vector of characters.")
+  }
+
+  # Check the input num_vars is a vector of column names of dataframe
+  if (!all(num_vars %in% colnames(dataframe))) {
+    stop("The argument 'num_vars' should be a subset of the column names of the dataframe.")
+  }
+
+  # Select the numeric variables to work with
+  df <- dataframe %>%
+    select(num_vars)
+
+  # Check if only the numeric variables are selected
+  if (!all(sapply(df, is.numeric))) {
+    stop("Only numeric columns expected, please check the input.")
+  }
+
+  # Calculate the statistical summaries for all columns
+  stat_funs <- c(min, max, median, mean, sd)
+  temp <- c()
+  for (item in stat_funs) {
+    data_stat <- sapply(df, item, na.rm = TRUE)
+    temp <- rbind(temp, data_stat)
+  }
+  data_quantile <- sapply(df, quantile, na.rm = TRUE)
+
+  # Get the 25% and 75% quantiles
+  quantile_025 <- data_quantile[2, ]
+  quantile_075 <- data_quantile[4, ]
+
+  # Give the summaries meaningful names and make the result as a tibble
+  summary <- c("25%", "75%", "min", "max", "median", "mean", "sd")
+  summary_wo_name <- round(rbind(quantile_025, quantile_075, temp),3)
+  result <- as_tibble(cbind(summary, summary_wo_name))
+
+  # Plot the faceted histogram
+  data_plot <- df %>%
+    drop_na() %>%
+    gather() %>%
+    ggplot(aes(x = value)) +
+    geom_histogram(bins = 30, color = 'gray') +
+    facet_wrap(~ key, scales = "free", ncol = 3)
+
+  return(list(summary = result, plot = data_plot))
 }
 
 
@@ -52,7 +109,7 @@ describe_num_var <- function(dataframe, num_vars, plot=TRUE) {
 #' @param cat_vars vector of character strings of the names of the categorical variables.
 #'
 #' @return ggplot object to plot histogram of the categorical variables
-#' 
+#'
 #' @examples
 #' X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
 #' cat_vars <- c('type')
