@@ -1,6 +1,10 @@
 # author Group 4 Isaac Newton
 
+library(tibble)
 library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(testthat)
 
 #' This function generates an EDA report by plotting graphs and tables for the
 #' numeric variables, categorical variables, NA values and correlation in a dataframe
