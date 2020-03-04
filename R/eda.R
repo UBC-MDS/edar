@@ -33,7 +33,7 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param num_vars vector of character strings of the names of the numeric variables.
 #'
-#' @return list. A list of a dataframe contains the statistical summary and the ggplot objects of the faceted histogram of numeric variables.
+#' @return list. A list containing a dataframe with a statistical summary and a ggplot object with histograms of numeric variables faceted by each variable.
 #'
 #' @export
 #'
