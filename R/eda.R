@@ -43,7 +43,7 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 describe_num_var <- function(dataframe, num_vars) {
   # Check the input dataframe is a dataframe
   if (!is.data.frame(dataframe)) {
-    stop("The first argument should be a data frame.")
+    stop("The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
   }
 
   # Transform the input into tibble
