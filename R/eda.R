@@ -51,7 +51,7 @@ describe_num_var <- function(dataframe, num_vars) {
 
   # Chech the input num_vars is a vector of characters
   if (!is.character(num_vars) | !is.vector(num_vars)) {
-    stop("The second argument should be a vector of characters.")
+    stop("The value of the argument 'num_vars' should be a vector of characters.")
   }
 
   # Check the input num_vars is a vector of column names of dataframe
