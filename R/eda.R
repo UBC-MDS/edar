@@ -1,6 +1,8 @@
 # author Group 4 Isaac Newton
 
 library(dplyr)
+library(ggcorrplot)
+library(reshape2)
 
 #' This function generates an EDA report by plotting graphs and tables for the
 #' numeric variables, categorical variables, NA values and correlation in a dataframe
@@ -90,15 +92,8 @@ calc_cor <- function(df, num_vars) {
     drop_na()
 
   # Test colums to check if columns provided are numeric
-  for (i in num_var) {
-    if (typeof(df_num[,i]) == "list") {
-      data_unlisted <- unlist(df_num[i])
-      if (!is.numeric(data_unlisted))
-        stop("Columns do not all contain numeric values.")
-    } else if (!is.numeric(df_num[, i])) {
-      stop("Columns do not all contain numeric values.")
-    }
-  }
+  if (!all(sapply(df_num, is.numeric)))
+    stop("Columns do not all contain numeric values.")
 
   # Find the correlation
   df_cor <- round(cor(df_num),2)
