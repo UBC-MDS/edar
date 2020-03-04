@@ -30,22 +30,27 @@ test_describe_num_var <- function() {
   })
 
   test_that("Corresponding error message should be expected if the dataframe argument is not a dataframe.", {
-    expect_error(describe_num_var("abc", num_var), regexp = "The first argument should be a data frame.")
+    expect_error(describe_num_var("abc", num_var), 
+    regexp = "The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
   })
 
   test_that("Corresponding error message should be expected if the num_vars argument is not a vector", {
-    expect_error(describe_num_var(test_data, test_data), regexp = "The second argument should be a vector of characters.")
+    expect_error(describe_num_var(test_data, test_data), 
+    regexp = "The value of the argument 'num_vars' should be a vector of characters.")
   })
 
   test_that("Corresponding error message should be expected if the num_vars argument is not a vector of charactors", {
-    expect_error(describe_num_var(test_data, c(1, 2)), regexp = "The second argument should be a vector of characters.")
+    expect_error(describe_num_var(test_data, c(1, 2)), 
+    regexp = "The value of the argument 'num_vars' should be a vector of characters.")
   })
 
   test_that("Corresponding error message should be expected if the num_vars argument contains element that is not a column name", {
-    expect_error(describe_num_var(test_data, c("num1", "abc")), regexp = "The second argument should be a subset of the cloumn names of the dataframe.")
+    expect_error(describe_num_var(test_data, c("num1", "abc")), 
+    regexp = "The argument 'num_vars' should be a subset of the column names of the dataframe.")
   })
 
   test_that("Corresponding error message should be expected if the selected columns contains categorical variables.", {
-    expect_error(describe_num_var(test_data, c("num1", "cat1")), regexp = "Not only the numeric variables are selected, please check the input.")
+    expect_error(describe_num_var(test_data, c("num1", "cat1")), 
+    regexp = "Only numeric columns expected, please check the input.")
   })
 }
