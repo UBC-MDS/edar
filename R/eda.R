@@ -52,7 +52,7 @@ describe_num_var <- function(dataframe, num_vars, plot=TRUE) {
 #' @param cat_vars vector of character strings of the names of the categorical variables.
 #'
 #' @return ggplot object to plot histogram of the categorical variables
-#' 
+#'
 #' @examples
 #' X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
 #' cat_vars <- c('type')
@@ -66,7 +66,7 @@ describe_cat_var <- function(dataframe, cat_vars) {
 
 #' Evaluates the correlation between the numeric columns of a given dataframe.
 #'
-#' @param dataframe The dataframe to be inspected.
+#' @param df The dataframe to be inspected.
 #' @param num_vars A list of strings of column names containing numeric variables.
 #'
 #' @return ggplot object; a correlation matrix plot labelled
@@ -79,8 +79,43 @@ describe_cat_var <- function(dataframe, cat_vars) {
 #' df <- data.frame(x = (c(2,3,4)), y= c(1,10,3))
 #' col_num <- list("x", "y")
 #' calc_cor(df, col_num)
-calc_cor <- function(dataframe, num_vars) {
-  #TODO implement function
+calc_cor <- function(df, num_vars) {
+  # Test dataframe input to check if dataframe is a dataframe
+  if (!is.data.frame(df))
+    stop("Input 'df' should be a dataframe.")
+
+  # Find numerical columns and remove NA
+  df_num <- df %>%
+    select(num_vars) %>%
+    drop_na()
+
+  # Test colums to check if columns provided are numeric
+  for (i in num_var) {
+    if (typeof(df_num[,i]) == "list") {
+      data_unlisted <- unlist(df_num[i])
+      if (!is.numeric(data_unlisted))
+        stop("Columns do not all contain numeric values.")
+    } else if (!is.numeric(df_num[, i])) {
+      stop("Columns do not all contain numeric values.")
+    }
+  }
+
+  # Find the correlation
+  df_cor <- round(cor(df_num),2)
+
+  # Plot the correlation matrix
+  corr_plot <- ggcorrplot(df_cor,
+                          type = "lower",
+                          outline.color = "white",
+                          lab = TRUE,
+                          title="Correlation Matrix",
+                          colors = c("blue", "white", "red"),
+                          lab_size = 8) +
+    theme(title=element_text(size=20),
+          axis.text=element_text(size=15, face='bold'),
+          text=element_text(size=15))
+
+  return(corr_plot)
 }
 
 
