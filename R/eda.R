@@ -65,7 +65,7 @@ describe_num_var <- function(dataframe, num_vars) {
 
   # Check if only the numeric variables are selected
   if (!all(sapply(df, is.numeric))) {
-    stop("Not only the numeric variables are selected, please check the input.")
+    stop("Only numeric columns expected, please check the input.")
   }
 
   # Calculate the statistical summaries for all columns
