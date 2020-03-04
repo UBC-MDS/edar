@@ -73,11 +73,12 @@ describe_num_var <- function(dataframe, num_vars) {
   }
 
   # Calculate the statistical summaries for all columns
-  data_max <- sapply(df, max, na.rm = TRUE)
-  data_min <- sapply(df, min, na.rm = TRUE)
-  data_median <- sapply(df, median, na.rm = TRUE)
-  data_mean <- sapply(df, mean, na.rm = TRUE)
-  data_sd <- sapply(df, sd, na.rm = TRUE)
+  stat_funs <- c(min, max, median, mean, sd)
+  temp <- c()
+  for (item in stat_funs) {
+    data_stat <- sapply(df, item, na.rm = TRUE)
+    temp <- rbind(temp, data_stat)
+  }
   data_quantile <- sapply(df, quantile, na.rm = TRUE)
 
   # Get the 25% and 75% quantiles
@@ -86,8 +87,7 @@ describe_num_var <- function(dataframe, num_vars) {
 
   # Give the summaries meaningful names and make the result as a tibble
   summary <- c("25%", "75%", "min", "max", "median", "mean", "sd")
-  summary_wo_name <- rbind(quantile_025, quantile_075, data_min,
-                           data_max, data_median, data_mean, data_sd)
+  summary_wo_name <- round(rbind(quantile_025, quantile_075, temp),3)
   result <- as_tibble(cbind(summary, summary_wo_name))
 
   # Plot the faceted histogram

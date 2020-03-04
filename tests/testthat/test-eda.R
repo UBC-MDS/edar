@@ -1,3 +1,5 @@
+#' Tests the `describe_num_var` function.
+
 test_describe_num_var <- function() {
   test_data <- helper_create_data(500)
   num_var <- c('num1', 'num2', 'num3')
@@ -11,13 +13,13 @@ test_describe_num_var <- function() {
     min_num1 <- min(test_data$num1, na.rm = TRUE)
     q25_num1 <- quantile(test_data$num1, 0.25, na.rm = TRUE)
     q75_num1 <- quantile(test_data$num1, 0.75, na.rm = TRUE)
-    expect_equivalent(as.numeric(result$summary$num1[1]), q25_num1)
-    expect_equivalent(as.numeric(result$summary$num1[2]), q75_num1)
-    expect_equivalent(as.numeric(result$summary$num1[3]), min_num1)
-    expect_equivalent(as.numeric(result$summary$num1[4]), max_num1)
-    expect_equivalent(as.numeric(result$summary$num1[5]), median_num1)
-    expect_equivalent(as.numeric(result$summary$num1[6]), mean_num1)
-    expect_equivalent(as.numeric(result$summary$num1[7]), sd_num1)
+    expect_equivalent(as.numeric(result$summary$num1[1]), round(q25_num1),3)
+    expect_equivalent(as.numeric(result$summary$num1[2]), round(q75_num1),3)
+    expect_equivalent(as.numeric(result$summary$num1[3]), round(min_num1),3)
+    expect_equivalent(as.numeric(result$summary$num1[4]), round(max_num1),3)
+    expect_equivalent(as.numeric(result$summary$num1[5]), round(median_num1),3)
+    expect_equivalent(as.numeric(result$summary$num1[6]), round(mean_num1),3)
+    expect_equivalent(as.numeric(result$summary$num1[7]), round(sd_num1),3)
   })
 
   test_that("The returned plot should be a ggplot object.", {
@@ -30,27 +32,27 @@ test_describe_num_var <- function() {
   })
 
   test_that("Corresponding error message should be expected if the dataframe argument is not a dataframe.", {
-    expect_error(describe_num_var("abc", num_var), 
+    expect_error(describe_num_var("abc", num_var),
     regexp = "The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
   })
 
   test_that("Corresponding error message should be expected if the num_vars argument is not a vector", {
-    expect_error(describe_num_var(test_data, test_data), 
+    expect_error(describe_num_var(test_data, test_data),
     regexp = "The value of the argument 'num_vars' should be a vector of characters.")
   })
 
   test_that("Corresponding error message should be expected if the num_vars argument is not a vector of charactors", {
-    expect_error(describe_num_var(test_data, c(1, 2)), 
+    expect_error(describe_num_var(test_data, c(1, 2)),
     regexp = "The value of the argument 'num_vars' should be a vector of characters.")
   })
 
   test_that("Corresponding error message should be expected if the num_vars argument contains element that is not a column name", {
-    expect_error(describe_num_var(test_data, c("num1", "abc")), 
+    expect_error(describe_num_var(test_data, c("num1", "abc")),
     regexp = "The argument 'num_vars' should be a subset of the column names of the dataframe.")
   })
 
   test_that("Corresponding error message should be expected if the selected columns contains categorical variables.", {
-    expect_error(describe_num_var(test_data, c("num1", "cat1")), 
+    expect_error(describe_num_var(test_data, c("num1", "cat1")),
     regexp = "Only numeric columns expected, please check the input.")
   })
 }
