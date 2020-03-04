@@ -28,20 +28,73 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param num_vars vector of character strings of the names of the numeric variables.
-#' @param plot logical. If TRUE (the default) the distribution of the numeric variables will be plotted.
 #'
-#' @return tbl. A dataframe contains the statistical summary.
+#' @return list. A list of a dataframe contains the statistical summary and the ggplot objects of the faceted histogram of numeric variables.
 #'
 #' @export
 #'
 #' @examples
-#' X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
+#' X <- tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
 #' num_vars <- c('height')
-#' describe_num_var(X, num_vars)
+#' result <- describe_num_var(X, num_vars)
+#' result$summary
+#' result$plot
 #'
-describe_num_var <- function(dataframe, num_vars, plot=TRUE) {
-  #TODO implement function
-  print(num_vars)
+describe_num_var <- function(dataframe, num_vars) {
+  # Check the input dataframe is a dataframe
+  if (!is.data.frame(dataframe)) {
+    stop("The first argument should be a data frame.")
+  }
+
+  # Transform the input into tibble
+  dataframe <- as_tibble(dataframe)
+
+  # Chech the input num_vars is a vector of characters
+  if (!is.character(num_vars) | !is.vector(num_vars)) {
+    stop("The second argument should be a vector of characters.")
+  }
+
+  # Check the input num_vars is a vector of column names of dataframe
+  if (!all(num_vars %in% colnames(dataframe))) {
+    stop("The second argument should be a subset of the cloumn names of the dataframe.")
+  }
+
+  # Select the numeric variables to work with
+  df <- dataframe %>%
+    select(num_vars)
+
+  # Check if only the numeric variables are selected
+  if (!all(sapply(df, is.numeric))) {
+    stop("Not only the numeric variables are selected, please check the input.")
+  }
+
+  # Calculate the statistical summaries for all columns
+  data_max <- sapply(df, max, na.rm = TRUE)
+  data_min <- sapply(df, min, na.rm = TRUE)
+  data_median <- sapply(df, median, na.rm = TRUE)
+  data_mean <- sapply(df, mean, na.rm = TRUE)
+  data_sd <- sapply(df, sd, na.rm = TRUE)
+  data_quantile <- sapply(df, quantile, na.rm = TRUE)
+
+  # Get the 25% and 75% quantiles
+  quantile_025 <- data_quantile[2, ]
+  quantile_075 <- data_quantile[4, ]
+
+  # Give the summaries meaningful names and make the result as a tibble
+  summary <- c("25%", "75%", "min", "max", "median", "mean", "sd")
+  summary_wo_name <- rbind(quantile_025, quantile_075, data_min,
+                           data_max, data_median, data_mean, data_sd)
+  result <- as_tibble(cbind(summary, summary_wo_name))
+
+  # Plot the faceted histogram
+  data_plot <- df %>%
+    drop_na() %>%
+    gather() %>%
+    ggplot(aes(x = value)) +
+    geom_histogram(bins = 30, color = 'gray') +
+    facet_wrap(~ key, scales = "free", ncol = 3)
+
+  return(list(summary = result, plot = data_plot))
 }
 
 
@@ -52,7 +105,7 @@ describe_num_var <- function(dataframe, num_vars, plot=TRUE) {
 #' @param cat_vars vector of character strings of the names of the categorical variables.
 #'
 #' @return ggplot object to plot histogram of the categorical variables
-#' 
+#'
 #' @examples
 #' X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
 #' cat_vars <- c('type')
