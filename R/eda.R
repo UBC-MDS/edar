@@ -91,7 +91,7 @@ calc_cor <- function(df, num_vars) {
     select(num_vars) %>%
     drop_na()
 
-  # Test colums to check if columns provided are numeric
+  # Test columns to check if columns provided are numeric
   if (!all(sapply(df_num, is.numeric)))
     stop("Columns do not all contain numeric values.")
 
