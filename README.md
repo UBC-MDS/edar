@@ -1,3 +1,5 @@
+<img src="img/edar.png" width="120" align = "right">
+
 # A Package for Exploratory Data Analysis (edar)
 
 <!-- badges: start -->
