@@ -1,6 +1,8 @@
 # author Group 4 Isaac Newton
 
 library(dplyr)
+library(purrr)
+library(tibble)
 
 #' This function generates an EDA report by plotting graphs and tables for the
 #' numeric variables, categorical variables, NA values and correlation in a dataframe
@@ -39,7 +41,7 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 #' num_vars <- c('height')
 #' describe_num_var(X, num_vars)
 #'
-describe_num_var <- function(dataframe, num_vars, plot=TRUE) {
+describe_num_var <- function(dataframe, num_vars, plot = TRUE) {
   #TODO implement function
   print(num_vars)
 }
@@ -52,7 +54,7 @@ describe_num_var <- function(dataframe, num_vars, plot=TRUE) {
 #' @param cat_vars vector of character strings of the names of the categorical variables.
 #'
 #' @return ggplot object to plot histogram of the categorical variables
-#' 
+#'
 #' @examples
 #' X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
 #' cat_vars <- c('type')
@@ -88,11 +90,34 @@ calc_cor <- function(dataframe, num_vars) {
 #'
 #' @param dataframe the dataframe to be inspected.
 #'
-#' @return a list of vectors; each vector corresponds to a column and
-#' each value inside the vector is 0 if the corresponding value is NA,
+#' @return a tibble; each column corresponds to the same column in dataframe
+#'  and each value inside the columnr is 0 if the corresponding value is NA,
 #' 1 otherwise.
-#' TODO write meaningful examples as implementation goes on
+#'
+#' @export
+#'
+#' @examples
+#' df <- data.frame(x = (c(2,3,4)), y= c(1,10,3))
+#' col_num <- describe_na_values(df)
+#'
+#' #> # A tibble: 2 x 3
+#' #>       x     y
+#' #>   <int> <int>
+#' #> 1     1     1
+#' #> 2     1     1
+#' #> 3     1     1
+#'
+#'#' df <- data.frame(x = (c(2,NaN,4)), y= c(1,10,3))
+#' col_num <- describe_na_values(df)
+#'
+#'  #> # A tibble: 2 x 3
+#' #>       x     y
+#' #>   <int> <int>
+#' #> 1     1     1
+#' #> 2     0     1
+#' #> 3     1     1
+#'
 describe_na_values <- function(dataframe) {
-  #TODO implement function
-  list(c(0))
+  ret_dataframe <-purrr::map(dataframe, function(x){as.numeric(!is.na(x))})
+  ret_dataframe
 }
