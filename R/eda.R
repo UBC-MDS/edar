@@ -2,9 +2,7 @@
 
 library(tibble)
 library(dplyr)
-library(reshape2)
 library(tidyr)
-library(testthat)
 
 #' This function generates an EDA report by plotting graphs and tables for the
 #'
@@ -132,20 +130,21 @@ describe_cat_var <- function(dataframe, cat_vars) {
 #' @export
 #'
 #' @examples
-#' df <- data.frame(x = (c(2,3,4)), y= c(1,10,3))
+#' df <- tibble(x = (c(2,3,4)), y= c(1,10,3))
 #' col_num <- list("x", "y")
 #' calc_cor(df, col_num)
+#'
 calc_cor <- function(df, num_vars) {
   # Test dataframe input to check if dataframe is a dataframe
   if (!is.data.frame(df))
     stop("Input 'df' should be a dataframe.")
 
   # Find numerical columns and remove NA
-  df_num <- df %>%
-    select(num_vars) %>%
-    drop_na()
+  df_num <- df[,num_vars]
+  df_num <- tidyr::drop_na(df_num)
 
-  # Test columns to check if columns provided are numeric
+
+  # Test colums to check if columns provided are numeric
   if (!all(sapply(df_num, is.numeric)))
     stop("Columns do not all contain numeric values.")
 
@@ -153,16 +152,16 @@ calc_cor <- function(df, num_vars) {
   df_cor <- round(cor(df_num),2)
 
   # Plot the correlation matrix
-  corr_plot <- ggcorrplot(df_cor,
-                          type = "lower",
-                          outline.color = "white",
-                          lab = TRUE,
-                          title="Correlation Matrix",
-                          colors = c("blue", "white", "red"),
-                          lab_size = 8) +
-    theme(title=element_text(size=20),
-          axis.text=element_text(size=15, face='bold'),
-          text=element_text(size=15))
+  corr_plot <- ggcorrplot::ggcorrplot(df_cor,
+                                      type = "lower",
+                                      outline.color = "white",
+                                      lab = TRUE,
+                                      title="Correlation Matrix",
+                                      colors = c("blue", "white", "red"),
+                                      lab_size = 8) +
+    ggplot2::theme(title=ggplot2::element_text(size=20),
+                   axis.text=ggplot2::element_text(size=15, face='bold'),
+                   text=ggplot2::element_text(size=15))
 
   return(corr_plot)
 }
