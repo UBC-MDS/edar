@@ -4,8 +4,6 @@
 #' @return None. the function will not throw an error
 #' if the tests fail.
 #'
-#' @export
-#'
 #' @examples
 #' test_cal_cor()
 test_cal_cor <- function(){
@@ -38,11 +36,11 @@ test_cal_cor <- function(){
   })
 
   test_that('All values should be between -1 and 1', {
-    p[[1]][3] <= 1 & p[[1]][3] >= -1
+    expect_true(all(p[[1]][3]) <= 1 & all(p[[1]][3] >= -1))
   })
 
   test_that('Var1 should not equal Var2', {
-    p[[1]][1] != p[[1]][2]
+    expect_true(all(p[[1]][[1]] != p[[1]][[2]]))
   })
 
   test_that("Corresponding error message should be expected if the dataframe argument is not a dataframe.", {
@@ -82,7 +80,7 @@ test_describe_num_var <- function() {
   })
 
   test_that("The returned plot should be a ggplot object.", {
-    expect_true(is.ggplot(result$plot))
+    expect_true(ggplot2::is.ggplot(result$plot))
   })
 
   test_that("The plot should be a bar chart and without y mapping.", {

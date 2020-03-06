@@ -5,6 +5,7 @@ library(dplyr)
 library(tidyr)
 
 #' This function generates an EDA report by plotting graphs and tables for the
+#' numeric variables, categorical variables, NA values and correlation in a dataframe
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param cat_vars vector of character strings of the names of the categorical variables.
@@ -130,8 +131,8 @@ describe_cat_var <- function(dataframe, cat_vars) {
 #' @export
 #'
 #' @examples
-#' df <- tibble(x = (c(2,3,4)), y= c(1,10,3))
-#' col_num <- list("x", "y")
+#' df <- data.frame(x = (c(2,3,4)), y= c(1,10,3))
+#' col_num <- c("x", "y")
 #' calc_cor(df, col_num)
 #'
 calc_cor <- function(df, num_vars) {
@@ -149,7 +150,7 @@ calc_cor <- function(df, num_vars) {
     stop("Columns do not all contain numeric values.")
 
   # Find the correlation
-  df_cor <- round(cor(df_num),2)
+  df_cor <- round(cor(df_num), 2)
 
   # Plot the correlation matrix
   corr_plot <- ggcorrplot::ggcorrplot(df_cor,
@@ -174,6 +175,7 @@ calc_cor <- function(df, num_vars) {
 #' @return a list of vectors; each vector corresponds to a column and
 #' each value inside the vector is 0 if the corresponding value is NA,
 #' 1 otherwise.
+#'
 #' TODO write meaningful examples as implementation goes on
 describe_na_values <- function(dataframe) {
   #TODO implement function
