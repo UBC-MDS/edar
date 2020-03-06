@@ -3,8 +3,6 @@
 library(tibble)
 library(dplyr)
 library(tidyr)
-library(ggplot2)
-library(testthat)
 
 #' This function generates an EDA report by plotting graphs and tables for the
 #' numeric variables, categorical variables, NA values and correlation in a dataframe
@@ -123,7 +121,7 @@ describe_cat_var <- function(dataframe, cat_vars) {
 
 #' Evaluates the correlation between the numeric columns of a given dataframe.
 #'
-#' @param dataframe The dataframe to be inspected.
+#' @param df The dataframe to be inspected.
 #' @param num_vars A list of strings of column names containing numeric variables.
 #'
 #' @return ggplot object; a correlation matrix plot labelled
@@ -134,10 +132,39 @@ describe_cat_var <- function(dataframe, cat_vars) {
 #'
 #' @examples
 #' df <- data.frame(x = (c(2,3,4)), y= c(1,10,3))
-#' col_num <- list("x", "y")
+#' col_num <- c("x", "y")
 #' calc_cor(df, col_num)
-calc_cor <- function(dataframe, num_vars) {
-  #TODO implement function
+#'
+calc_cor <- function(df, num_vars) {
+  # Test dataframe input to check if dataframe is a dataframe
+  if (!is.data.frame(df))
+    stop("Input 'df' should be a dataframe.")
+
+  # Find numerical columns and remove NA
+  df_num <- df[,num_vars]
+  df_num <- tidyr::drop_na(df_num)
+
+
+  # Test colums to check if columns provided are numeric
+  if (!all(sapply(df_num, is.numeric)))
+    stop("Columns do not all contain numeric values.")
+
+  # Find the correlation
+  df_cor <- round(cor(df_num), 2)
+
+  # Plot the correlation matrix
+  corr_plot <- ggcorrplot::ggcorrplot(df_cor,
+                                      type = "lower",
+                                      outline.color = "white",
+                                      lab = TRUE,
+                                      title="Correlation Matrix",
+                                      colors = c("blue", "white", "red"),
+                                      lab_size = 8) +
+    ggplot2::theme(title=ggplot2::element_text(size=20),
+                   axis.text=ggplot2::element_text(size=15, face='bold'),
+                   text=ggplot2::element_text(size=15))
+
+  return(corr_plot)
 }
 
 
@@ -148,6 +175,7 @@ calc_cor <- function(dataframe, num_vars) {
 #' @return a list of vectors; each vector corresponds to a column and
 #' each value inside the vector is 0 if the corresponding value is NA,
 #' 1 otherwise.
+#'
 #' TODO write meaningful examples as implementation goes on
 describe_na_values <- function(dataframe) {
   #TODO implement function
