@@ -56,3 +56,41 @@ test_describe_num_var <- function() {
     regexp = "Only numeric columns expected, please check the input.")
   })
 }
+
+
+test_describe_cat_var <- function() {
+  test_data <- helper_create_data(500)
+  cat_var <- c('cat1', 'cat2', 'cat3')
+  result <- describe_cat_var(test_data, cat_var)
+
+
+  test_that("The returned plot should be a ggplot object.", {
+    expect_true(is.ggplot(result))
+  })
+
+  test_that("The plot should be a bar chart and without y mapping.", {
+    expect_true("GeomBar" %in% c(class(result$layers[[1]]$geom)))
+    expect_true(is.null(rlang::get_expr(result$mapping$y)))
+  })
+
+  test_that("Corresponding error message should be expected if the dataframe argument is not a dataframe.", {
+    expect_error(describe_cat_var("abc", cat_var),
+                 regexp = "The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
+  })
+
+  test_that("Corresponding error message should be expected if the num_vars argument is not a vector", {
+    expect_error(describe_cat_var(test_data, test_data),
+                 regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
+  })
+
+  test_that("Corresponding error message should be expected if the num_vars argument is not a vector of charactors", {
+    expect_error(describe_cat_var(test_data, c(1, 2)),
+                 regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
+  })
+
+  test_that("Corresponding error message should be expected if the num_vars argument contains element that is not a column name", {
+    expect_error(describe_cat_var(test_data, c("num1", "abc")),
+                 regexp = "The argument 'cat_vars' should be a subset of the column names of the dataframe.")
+  })
+
+}
