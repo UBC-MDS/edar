@@ -75,7 +75,7 @@ test_describe_cat_var <- function() {
 
   test_that("Corresponding error message should be expected if the dataframe argument is not a dataframe.", {
     expect_error(describe_cat_var("abc", cat_var),
-                 regexp = "The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
+                 regexp = "The value of the argument 'dataframe' should be of type 'data.frame' or 'tibble'.")
   })
 
   test_that("Corresponding error message should be expected if the num_vars argument is not a vector", {
