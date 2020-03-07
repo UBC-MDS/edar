@@ -63,11 +63,67 @@ And the development version from [GitHub](https://github.com/) with:
 devtools::install_github("UBC-MDS/edar")
 ```
 
+## Dependencies
+
+  - R version 3.6.2 and R packages:
+      - rlang==0.4.2
+      - dplyr==0.8.3
+      - tibble==2.1.3
+      - purrr==0.3.3
+      - ggplot2==3.2.1
+      - tidyr==1.0.0
+      - ggcorrplot==0.1.3
+      - testthat==2.1.0
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(edar)
-## basic example code
+X <- dplyr::tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
+
+# Evaluates a dataframe for NA values
+describe_na_values(X)
+#> $type
+#> [1] 1 1 1
+#> 
+#> $height
+#> [1] 1 1 1
+#> 
+#> $width
+#> [1] 1 1 1
+
+# Show the EDA for the numeric variables
+num_result <- describe_num_var(X, c('height', 'width'))
+num_result$summary
+#> # A tibble: 7 x 3
+#>   summary height width 
+#>   <chr>   <chr>  <chr> 
+#> 1 25%     12.5   11.5  
+#> 2 75%     17.5   14    
+#> 3 min     10     10    
+#> 4 max     20     15    
+#> 5 median  15     13    
+#> 6 mean    15     12.667
+#> 7 sd      5      2.517
+num_result$plot
 ```
+
+<img src="man/figures/README-example-1.png" width="100%" />
+
+``` r
+
+# Show the EDA for the categorical variables
+describe_cat_var(X, c('type'))
+```
+
+<img src="man/figures/README-example-2.png" width="100%" />
+
+``` r
+
+# Plot the correlation matrix
+calc_cor(X, c('height', 'width'))
+```
+
+<img src="man/figures/README-example-3.png" width="100%" />
