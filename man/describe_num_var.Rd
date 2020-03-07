@@ -4,24 +4,24 @@
 \alias{describe_num_var}
 \title{Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, maximum and minimum for the numeric variables.}
 \usage{
-describe_num_var(dataframe, num_vars, plot = TRUE)
+describe_num_var(dataframe, num_vars)
 }
 \arguments{
 \item{dataframe}{tbl. The dataframe to be inspected.}
 
 \item{num_vars}{vector of character strings of the names of the numeric variables.}
-
-\item{plot}{logical. If TRUE (the default) the distribution of the numeric variables will be plotted.}
 }
 \value{
-tbl. A dataframe contains the statistical summary.
+list. A list containing a dataframe with a statistical summary and a ggplot object with histograms of numeric variables faceted by each variable.
 }
 \description{
 Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, maximum and minimum for the numeric variables.
 }
 \examples{
-X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
-num_vars <- c('height')
-describe_num_var(X, num_vars)
+X <- tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
+num_vars <- c('height', 'width')
+result <- describe_num_var(X, num_vars)
+result$summary
+result$plot
 
 }
