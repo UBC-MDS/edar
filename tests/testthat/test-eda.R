@@ -9,7 +9,7 @@
 #' if the tests fail.
 #'
 #' @examples
-#' test_na_value()
+#' test_describe_na_values ()
 
 test_describe_na_values <- function() {
   test_that("describe_na_value works", {
