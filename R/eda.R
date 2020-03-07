@@ -118,7 +118,7 @@ describe_num_var <- function(dataframe, num_vars) {
 describe_cat_var <- function(dataframe, cat_vars) {
   # Check the input dataframe is a dataframe
   if (!is.data.frame(dataframe)) {
-    stop("The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
+    stop("The value of the argument 'dataframe' should be of type 'data.frame' or 'tibble'.")
   }
 
   # Transform the input into tibble
