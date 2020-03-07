@@ -74,7 +74,7 @@ test_describe_na_values <- function() {
 }
 
 
-
+test_describe_na_values ()
 
 #' Tests the correlation function to make sure output is rendered correctly
 #' or the function will fail with an error message and problem.
