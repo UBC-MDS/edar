@@ -1,65 +1,82 @@
 
+
 test_that("multiplication works", {
   expect_equal(2 * 2, 4)
 })
 
+#' Tests the describe_na_value function
+#'
+#' @return None. the function will not throw an error
+#' if the tests fail.
+#' @export
+#'
+#' @examples
+#' test_na_value()
 
-test_that("describe_na_value works", {
-  no_na_tbl <- tibble::tibble(
-    col1 = c(1, 2),
-    col2 = c(0.5, 0.4),
-    col3 = c("a", "b")
-  )
-
-  numerical_na_tbl <- tibble::tibble(
-    col1 = c(1, 2),
-    col2 = c(NaN, 0.4),
-    col3 = c("a", "b")
-  )
-
-  cat_na_tbl <- tibble::tibble(
-    col1 = c(1, 2),
-    col2 = c(0.5, 0.4),
-    col3 = c(NA_character_, "b")
-  )
-
-  not_a_tbl <- list(col1 = c(1, 2),
-                    col2 = c(0.5, 0.4),
-                    col3 = c("a", "b"))
-
-
-  expect_error(describe_na_values(not_a_tbl),
-               regexp = "The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
-
-  expect_true(dplyr::all_equal(
-    edar::describe_na_values(no_na_tbl),
-    tibble::tibble(
-      col1 = c(1, 1),
-      col2 = c(1, 1),
-      col3 = c(1, 1)
+test_describe_na_values <- function() {
+  test_that("describe_na_value works", {
+    no_na_tbl <- tibble::tibble(
+      col1 = c(1, 2),
+      col2 = c(0.5, 0.4),
+      col3 = c("a", "b")
     )
-  ))
 
-  expect_true(dplyr::all_equal(
-    edar::describe_na_values(numerical_na_tbl),
-    tibble::tibble(
-      col1 = c(1, 1),
-      col2 = c(0, 1),
-      col3 = c(1, 1)
+    numerical_na_tbl <- tibble::tibble(
+      col1 = c(1, 2),
+      col2 = c(NaN, 0.4),
+      col3 = c("a", "b")
     )
-  ))
 
-  expect_true(dplyr::all_equal(
-    edar::describe_na_values(cat_na_tbl),
-    tibble::tibble(
-      col1 = c(1, 1),
-      col2 = c(1, 1),
-      col3 = c(0, 1)
+    cat_na_tbl <- tibble::tibble(
+      col1 = c(1, 2),
+      col2 = c(0.5, 0.4),
+      col3 = c(NA_character_, "b")
     )
-  ))
+
+    not_a_tbl <- list(
+      col1 = c(1, 2),
+      col2 = c(0.5, 0.4),
+      col3 = c("a", "b")
+    )
 
 
-})
+    expect_error(describe_na_values(not_a_tbl),
+                 regexp = "The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
+
+    expect_true(dplyr::all_equal(
+      edar::describe_na_values(no_na_tbl),
+      tibble::tibble(
+        col1 = c(1, 1),
+        col2 = c(1, 1),
+        col3 = c(1, 1)
+      )
+    ))
+
+    expect_true(dplyr::all_equal(
+      edar::describe_na_values(numerical_na_tbl),
+      tibble::tibble(
+        col1 = c(1, 1),
+        col2 = c(0, 1),
+        col3 = c(1, 1)
+      )
+    ))
+
+    expect_true(dplyr::all_equal(
+      edar::describe_na_values(cat_na_tbl),
+      tibble::tibble(
+        col1 = c(1, 1),
+        col2 = c(1, 1),
+        col3 = c(0, 1)
+      )
+    ))
+
+
+  })
+
+}
+
+
+
 
 #' Tests the correlation function to make sure output is rendered correctly
 #' or the function will fail with an error message and problem.
@@ -67,9 +84,11 @@ test_that("describe_na_value works", {
 #' @return None. the function will not throw an error
 #' if the tests fail.
 #'
+#' @export
+#'
 #' @examples
 #' test_cal_cor()
-test_cal_cor <- function(){
+test_cal_cor <- function() {
   data <- helper_create_data(200)
   num_var <- c('num1', 'num2', 'num3')
   p <- calc_cor(data, num_var)
@@ -106,15 +125,19 @@ test_cal_cor <- function(){
     expect_true(all(p[[1]][[1]] != p[[1]][[2]]))
   })
 
-  test_that("Corresponding error message should be expected if the dataframe argument is not a dataframe.", {
-    expect_error(calc_cor("abc", num_var),
-                 regexp = "Input 'df' should be a dataframe.")
-  })
+  test_that(
+    "Corresponding error message should be expected if the dataframe argument is not a dataframe.",
+    {
+      expect_error(calc_cor("abc", num_var),
+                   regexp = "Input 'df' should be a dataframe.")
+    }
+  )
 
-  test_that("Corresponding error message should be expected if the column values are not numeric.", {
-    expect_error(calc_cor(data, c("cat1")),
-                 regexp = "Columns do not all contain numeric values.")
-  })
+  test_that("Corresponding error message should be expected if the column values are not numeric.",
+            {
+              expect_error(calc_cor(data, c("cat1")),
+                           regexp = "Columns do not all contain numeric values.")
+            })
 }
 test_cal_cor()
 
