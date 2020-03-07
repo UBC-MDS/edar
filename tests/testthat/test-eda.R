@@ -7,7 +7,6 @@
 #'
 #' @return None. the function will not throw an error
 #' if the tests fail.
-#' @export
 #'
 #' @examples
 #' test_na_value()
