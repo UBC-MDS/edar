@@ -1,5 +1,6 @@
 
 
+
 test_that("multiplication works", {
   expect_equal(2 * 2, 4)
 })
@@ -26,7 +27,7 @@ test_describe_na_values <- function() {
       col2 = c(NaN, 0.4),
       col3 = c("a", "b")
     )
-
+    
     cat_na_tbl <- tibble::tibble(
       col1 = c(1, 2),
       col2 = c(0.5, 0.4),
@@ -118,7 +119,7 @@ test_cal_cor <- function() {
   })
 
   test_that('All values should be between -1 and 1', {
-    expect_true(all(p[[1]][3]) <= 1 & all(p[[1]][3] >= -1))
+    expect_true(all(p[[1]][3] <= 1) & all(p[[1]][3] >= -1))
   })
 
   test_that('Var1 should not equal Var2', {
@@ -141,13 +142,24 @@ test_cal_cor <- function() {
 }
 test_cal_cor()
 
-#' Tests the `describe_num_var` function.
+#' Tests the describe_num_var function to make sure outputs are correct
+#' or the function will fail with the correct error message.
+#'
+#' @return None. the function will not throw an error
+#' if the tests fail.
+#'
+#' @examples
+#' test_describe_num_var()
 
 test_describe_num_var <- function() {
+  # Generate test data from the helper function.
   test_data <- helper_create_data(500)
   num_var <- c('num1', 'num2', 'num3')
+
+  # Test the results when the input is correct.
   result <- describe_num_var(test_data, num_var)
 
+  # Test if the statistical summary is correctly calculated.
   test_that("The statistical summary should be correctly calculated", {
     mean_num1 <- mean(test_data$num1, na.rm = TRUE)
     median_num1 <- median(test_data$num1, na.rm = TRUE)
@@ -165,15 +177,18 @@ test_describe_num_var <- function() {
     expect_equivalent(as.numeric(result$summary$num1[7]), round(sd_num1), 3)
   })
 
+  # Test the plot type is correct.
   test_that("The returned plot should be a ggplot object.", {
     expect_true(ggplot2::is.ggplot(result$plot))
   })
 
+  # Test the plot type is correct.
   test_that("The plot should be a bar chart and without y mapping.", {
     expect_true("GeomBar" %in% c(class(result$plot$layers[[1]]$geom)))
     expect_true(is.null(rlang::get_expr(result$plot$mapping$y)))
   })
 
+  # Test the error message is correct when the type of `dataframe` argument is wrong.
   test_that(
     "Corresponding error message should be expected if the dataframe argument is not a dataframe.",
     {
@@ -182,6 +197,7 @@ test_describe_num_var <- function() {
     }
   )
 
+  # Test the error message is correct when the type of `num_vars` argument is wrong.
   test_that(
     "Corresponding error message should be expected if the num_vars argument is not a vector",
     {
@@ -190,6 +206,7 @@ test_describe_num_var <- function() {
     }
   )
 
+  # Test the error message is correct when the type of `num_vars` argument is wrong.
   test_that(
     "Corresponding error message should be expected if the num_vars argument is not a vector of charactors",
     {
@@ -198,6 +215,7 @@ test_describe_num_var <- function() {
     }
   )
 
+  # Test the error message is correct when the type of `num_vars` argument is not a subset of the column names of the dataframe.
   test_that(
     "Corresponding error message should be expected if the num_vars argument contains element that is not a column name",
     {
@@ -206,6 +224,7 @@ test_describe_num_var <- function() {
     }
   )
 
+  # Test the error message is correct when `num_vars` argument contains categorical columns of the dataframe.
   test_that(
     "Corresponding error message should be expected if the selected columns contains categorical variables.",
     {
@@ -216,3 +235,50 @@ test_describe_num_var <- function() {
 }
 
 test_describe_num_var()
+
+#' Tests the describe_cat_var function to make sure outputs are correct
+#' or the function will fail with the correct error message.
+#'
+#' @return None. the function will not throw an error
+#' if the tests fail.
+#'
+#' @examples
+#' test_describe_cat_var()
+test_describe_cat_var <- function() {
+  test_data <- helper_create_data(500)
+  cat_var <- c('cat1', 'cat2', 'cat3')
+  result <- describe_cat_var(test_data, cat_var)
+
+
+  test_that("The returned plot should be a ggplot object.", {
+    expect_true(is.ggplot(result))
+  })
+
+  test_that("The plot should be a bar chart and without y mapping.", {
+    expect_true("GeomBar" %in% c(class(result$layers[[1]]$geom)))
+    expect_true(is.null(rlang::get_expr(result$mapping$y)))
+  })
+
+  test_that("Corresponding error message should be expected if the dataframe argument is not a dataframe.", {
+    expect_error(describe_cat_var("abc", cat_var),
+                 regexp = "The value of the argument 'dataframe' should be of type 'data.frame' or 'tibble'.")
+  })
+
+  test_that("Corresponding error message should be expected if the num_vars argument is not a vector", {
+    expect_error(describe_cat_var(test_data, test_data),
+                 regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
+  })
+
+  test_that("Corresponding error message should be expected if the num_vars argument is not a vector of charactors", {
+    expect_error(describe_cat_var(test_data, c(1, 2)),
+                 regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
+  })
+
+  test_that("Corresponding error message should be expected if the num_vars argument contains element that is not a column name", {
+    expect_error(describe_cat_var(test_data, c("num1", "abc")),
+                 regexp = "The argument 'cat_vars' should be a subset of the column names of the dataframe.")
+  })
+
+}
+
+test_describe_cat_var()

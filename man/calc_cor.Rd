@@ -4,23 +4,22 @@
 \alias{calc_cor}
 \title{Evaluates the correlation between the numeric columns of a given dataframe.}
 \usage{
-calc_cor(dataframe, num_vars)
+calc_cor(df, num_vars)
 }
 \arguments{
-\item{dataframe}{The dataframe to be inspected.}
+\item{df}{The dataframe to be inspected.}
 
 \item{num_vars}{A list of strings of column names containing numeric variables.}
 }
 \value{
-ggplot object; a correlation matrix plot labelled
-with the correlation coefficients of -1 to 1 between
-each numeric column and other numeric columns in the dataframe.
+ggplot object; a correlation matrix plot labelled with the correlation coefficients of -1 to 1 between each numeric column and other numeric columns in the dataframe.
 }
 \description{
 Evaluates the correlation between the numeric columns of a given dataframe.
 }
 \examples{
 df <- data.frame(x = (c(2,3,4)), y= c(1,10,3))
-col_num <- list("x", "y")
+col_num <- c("x", "y")
 calc_cor(df, col_num)
+
 }

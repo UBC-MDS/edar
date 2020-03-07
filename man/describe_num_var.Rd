@@ -18,7 +18,7 @@ list. A list containing a dataframe with a statistical summary and a ggplot obje
 Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, maximum and minimum for the numeric variables.
 }
 \examples{
-X <- tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
+X <- dplyr::tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
 num_vars <- c('height', 'width')
 result <- describe_num_var(X, num_vars)
 result$summary

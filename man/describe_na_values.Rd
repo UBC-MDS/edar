@@ -10,10 +10,7 @@ describe_na_values(dataframe)
 \item{dataframe}{the dataframe to be inspected.}
 }
 \value{
-a tibble; each column corresponds to the same column in dataframe
- and each value inside the columnr is 0 if the corresponding value is NA,
-1 otherwise.
-
+a tibble; each column corresponds to the same column in dataframe and each value inside the columnr is 0 if the corresponding value is NA, 1 otherwise.
 stops if the object passed in is not a data.frame or tibble.
 }
 \description{
@@ -30,10 +27,10 @@ col_num <- describe_na_values(df)
 #> 2     1     1
 #> 3     1     1
 
-#' df <- data.frame(x = (c(2,NaN,4)), y= c(1,10,3))
+df <- data.frame(x = (c(2,NaN,4)), y= c(1,10,3))
 col_num <- describe_na_values(df)
 
- #> # A tibble: 2 x 3
+#> # A tibble: 2 x 3
 #>       x     y
 #>   <int> <int>
 #> 1     1     1
