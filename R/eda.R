@@ -1,13 +1,6 @@
 # author Group 4 Isaac Newton
 
-library(tibble)
-library(dplyr)
-library(purrr)
-library(tidyr)
-
-
-#' This function generates an EDA report by plotting graphs and tables for the
-#' numeric variables, categorical variables, NA values and correlation in a dataframe
+#' This function generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param cat_vars vector of character strings of the names of the categorical variables.
@@ -18,7 +11,7 @@ library(tidyr)
 #' @export
 #'
 #' @examples
-#' X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
+#' X <- dplyr::tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
 #' cat_vars <- c('type')
 #' num_vars <- c('height')
 #' generate_report(X, cat_vars, num_vars)
@@ -35,10 +28,15 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 #'
 #' @return list. A list containing a dataframe with a statistical summary and a ggplot object with histograms of numeric variables faceted by each variable.
 #'
+#' @import tibble
+#' @import dplyr
+#' @import tidyr
+#' @import ggplot2
+#' @importFrom stats median quantile sd
 #' @export
 #'
 #' @examples
-#' X <- tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
+#' X <- dplyr::tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
 #' num_vars <- c('height', 'width')
 #' result <- describe_num_var(X, num_vars)
 #' result$summary
@@ -102,23 +100,55 @@ describe_num_var <- function(dataframe, num_vars) {
 }
 
 
-#' This function will take data frame and categorical variable names and will
-#  plot the histogram of each categorical variable.
+#' This function will take data frame and categorical variable names and will plot the histogram of each categorical variable.
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param cat_vars vector of character strings of the names of the categorical variables.
 #'
 #' @return ggplot object to plot histogram of the categorical variables
 #'
+#' @export
+#'
 #' @examples
-#' X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
+#' X <- dplyr::tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
 #' cat_vars <- c('type')
-#' describe_num_var(X, cat_vars)
+#' describe_cat_var(X, cat_vars)
 #'
 describe_cat_var <- function(dataframe, cat_vars) {
-  #TODO implement function
-  print(cat_vars)
+  # Check the input dataframe is a dataframe
+  if (!is.data.frame(dataframe)) {
+    stop("The value of the argument 'dataframe' should be of type 'data.frame' or 'tibble'.")
+  }
+
+  # Transform the input into tibble
+  dataframe <- as_tibble(dataframe)
+
+  # Chech the input cat_vars is a vector of characters
+  if (!is.character(cat_vars) | !is.vector(cat_vars)) {
+    stop("The value of the argument 'cat_vars' should be a vector of characters.")
+  }
+
+  # Check the input cat_vars is a vector of column names of dataframe
+  if (!all(cat_vars %in% colnames(dataframe))) {
+    stop("The argument 'cat_vars' should be a subset of the column names of the dataframe.")
+  }
+
+  # Select the categorical variables to work with
+  df <- dataframe %>%
+    select(cat_vars)
+
+  # Plot the faceted histogram
+  data_plot <- df %>%
+    drop_na() %>%
+    gather() %>%
+    ggplot(aes(x = value)) +
+    geom_bar(aes(y=..count..), color = 'gray',width = 0.6) +
+    facet_wrap(~ key, scales = "free", ncol = 3)+
+    ggtitle('Histogram of categorical variables')
+
+  return(data_plot)
 }
+
 
 
 #' Evaluates the correlation between the numeric columns of a given dataframe.
@@ -126,9 +156,7 @@ describe_cat_var <- function(dataframe, cat_vars) {
 #' @param df The dataframe to be inspected.
 #' @param num_vars A list of strings of column names containing numeric variables.
 #'
-#' @return ggplot object; a correlation matrix plot labelled
-#' with the correlation coefficients of -1 to 1 between
-#' each numeric column and other numeric columns in the dataframe.
+#' @return ggplot object; a correlation matrix plot labelled with the correlation coefficients of -1 to 1 between each numeric column and other numeric columns in the dataframe.
 #'
 #' @export
 #'
@@ -171,7 +199,7 @@ calc_cor <- function(df, num_vars) {
     stop("Columns do not all contain numeric values.")
 
   # Find the correlation
-  df_cor <- round(cor(df_num), 2)
+  df_cor <- round(stats::cor(df_num), 2)
 
   # Plot the correlation matrix
   corr_plot <- ggcorrplot::ggcorrplot(df_cor,
@@ -193,9 +221,7 @@ calc_cor <- function(df, num_vars) {
 #'
 #' @param dataframe the dataframe to be inspected.
 #'
-#' @return a tibble; each column corresponds to the same column in dataframe
-#'  and each value inside the columnr is 0 if the corresponding value is NA,
-#' 1 otherwise.
+#' @return a tibble; each column corresponds to the same column in dataframe and each value inside the columnr is 0 if the corresponding value is NA, 1 otherwise.
 
 #' stops if the object passed in is not a data.frame or tibble.
 #' @export
@@ -211,10 +237,10 @@ calc_cor <- function(df, num_vars) {
 #' #> 2     1     1
 #' #> 3     1     1
 #'
-#'#' df <- data.frame(x = (c(2,NaN,4)), y= c(1,10,3))
+#' df <- data.frame(x = (c(2,NaN,4)), y= c(1,10,3))
 #' col_num <- describe_na_values(df)
 #'
-#'  #> # A tibble: 2 x 3
+#' #> # A tibble: 2 x 3
 #' #>       x     y
 #' #>   <int> <int>
 #' #> 1     1     1
