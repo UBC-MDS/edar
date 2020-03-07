@@ -2,7 +2,7 @@
 % Please edit documentation in R/eda.R
 \name{describe_cat_var}
 \alias{describe_cat_var}
-\title{This function will take data frame and categorical variable names and will}
+\title{This function will take data frame and categorical variable names and will plot the histogram of each categorical variable.}
 \usage{
 describe_cat_var(dataframe, cat_vars)
 }
@@ -15,11 +15,11 @@ describe_cat_var(dataframe, cat_vars)
 ggplot object to plot histogram of the categorical variables
 }
 \description{
-This function will take data frame and categorical variable names and will
+This function will take data frame and categorical variable names and will plot the histogram of each categorical variable.
 }
 \examples{
-X <- tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
+X <- dplyr::tibble(type = c('Car','Bus','Car'), height = c(10,20,30))
 cat_vars <- c('type')
-describe_num_var(X, cat_vars)
+describe_cat_var(X, cat_vars)
 
 }

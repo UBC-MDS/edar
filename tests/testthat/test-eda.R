@@ -93,7 +93,7 @@ test_cal_cor <- function(){
   })
 
   test_that('All values should be between -1 and 1', {
-    expect_true(all(p[[1]][3]) <= 1 & all(p[[1]][3] >= -1))
+    expect_true(all(p[[1]][3] <= 1) & all(p[[1]][3] >= -1))
   })
 
   test_that('Var1 should not equal Var2', {
@@ -128,7 +128,7 @@ test_describe_num_var <- function() {
 
   # Test the results when the input is correct.
   result <- describe_num_var(test_data, num_var)
-  
+
   # Test if the statistical summary is correctly calculated.
   test_that("The statistical summary should be correctly calculated", {
     mean_num1 <- mean(test_data$num1, na.rm = TRUE)
@@ -204,6 +204,8 @@ test_describe_num_var <- function() {
   )
 }
 
+test_describe_num_var()
+
 #' Tests the describe_cat_var function to make sure outputs are correct
 #' or the function will fail with the correct error message.
 #'
@@ -249,3 +251,4 @@ test_describe_cat_var <- function() {
 
 }
 
+test_describe_cat_var()
