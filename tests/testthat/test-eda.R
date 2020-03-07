@@ -83,51 +83,78 @@ test_cal_cor <- function() {
   num_var <- c('num1', 'num2', 'num3')
   p <- calc_cor(data, num_var)
 
+  # Tests if the output should be a ggplot object.
   test_that("The returned plot should be a ggplot object.", {
     expect_true(ggplot2::is.ggplot(p))
   })
 
+  # Tests the plot uses the correct geom mapping for the ggplot.
   test_that('Plot should use geomtile and geomrect.', {
     expect_true("GeomTile" %in% c(class(p$layers[[1]]$geom)))
     expect_true("GeomRect" %in% c(class(p$layers[[1]]$geom)))
     expect_true("Layer" %in% c(class(rlang::get_expr(p$layers[[1]]))))
   })
 
+  # Tests the plot uses the correct layer on the ggplot.
   test_that('Overlapping plot shoud use geomtext.', {
     expect_true("GeomText" %in% c(class(rlang::get_expr(p$layers[[2]]$geom))))
   })
 
+  # Tests the plot uses the correct fields for the x-axis and y-axis.
   test_that('Plot should map Var1 to x-axis, and Var2 to y-axis.', {
     expect_true("Var1"  == rlang::get_expr(p$mapping$x))
     expect_true("Var2" == rlang::get_expr(p$mapping$y))
   })
 
+  # Tests the axes for the x and y-axis should the same for both base and text layer.
   test_that('Variables for layer and base should be the same', {
     expect_true(rlang::get_expr(p$layers[[2]]$mapping$x) == rlang::get_expr(p$mapping$x))
     expect_true(rlang::get_expr(p$layers[[2]]$mapping$y) == rlang::get_expr(p$mapping$y))
   })
 
+  # Tests that all valriables should be between -1 and 1.
   test_that('All values should be between -1 and 1', {
     expect_true(all(p[[1]][3] <= 1) & all(p[[1]][3] >= -1))
   })
 
+  # Tests that the x and y variables should not be the same
   test_that('Var1 should not equal Var2', {
     expect_true(all(p[[1]][[1]] != p[[1]][[2]]))
   })
 
-  test_that(
-    "Corresponding error message should be expected if the dataframe argument is not a dataframe.",
-    {
-      expect_error(calc_cor("abc", num_var),
-                   regexp = "Input 'df' should be a dataframe.")
-    }
-  )
+  # Tests that the correct error message is displayed if a non-dataframe object is passed as 'df'
+  test_that("Corresponding error message should be expected if the dataframe argument is not a dataframe.", {
+    expect_error(calc_cor("abc", num_var),
+                 regexp = "Input 'df' should be a dataframe.")
+  })
 
-  test_that("Corresponding error message should be expected if the column values are not numeric.",
-            {
-              expect_error(calc_cor(data, c("cat1")),
-                           regexp = "Columns do not all contain numeric values.")
-            })
+  # Tests that the correct error message is displayed column values are not numeric.
+  test_that("Corresponding error message should be expected if the column values are not numeric.", {
+    expect_error(calc_cor(data, c("cat1")),
+                 regexp = "Columns do not all contain numeric values.")
+  })
+
+  # Test the error message is correct when the type of `num_vars` argument is wrong.
+  test_that(
+    "Corresponding error message should be expected if the num_vars argument is not a vector", {
+      expect_error(calc_cor(data, data),
+                   regexp = "The value of the argument 'num_vars' should be a vector of characters.")
+    })
+
+  # Test the error message is correct when the type of `num_vars` argument is wrong.
+  test_that(
+    "Corresponding error message should be expected if the num_vars argument is not a vector of charactors", {
+      expect_error(calc_cor(data, c(1, 2)),
+                   regexp = "The value of the argument 'num_vars' should be a vector of characters.")
+    })
+
+  # Test the error message is correct when the type of `num_vars` argument is not a subset of the column names of the dataframe.
+  test_that(
+    "Corresponding error message should be expected if the num_vars argument contains element that is not a column name", {
+      expect_error(calc_cor(data, c("num1", "abc")),
+                   regexp = "The argument 'num_vars' should be a subset of the column names of the dataframe.")
+    })
+
 }
 test_cal_cor()
 

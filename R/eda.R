@@ -166,14 +166,33 @@ describe_cat_var <- function(dataframe, cat_vars) {
 #' calc_cor(df, col_num)
 #'
 calc_cor <- function(df, num_vars) {
+  # Check the input num_vars is a vector of characters
+  if (!is.character(num_vars) | !is.vector(num_vars)) {
+    stop("The value of the argument 'num_vars' should be a vector of characters.")
+  }
+
   # Test dataframe input to check if dataframe is a dataframe
   if (!is.data.frame(df))
     stop("Input 'df' should be a dataframe.")
 
-  # Find numerical columns and remove NA
-  df_num <- df[,num_vars]
-  df_num <- tidyr::drop_na(df_num)
+  # Check the input dataframe is a dataframe
+  if (!is.data.frame(df)) {
+    stop("The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
+  }
 
+  # Check the input num_vars is a vector of characters
+  if (!is.character(num_vars) | !is.vector(num_vars)) {
+    stop("The value of the argument 'num_vars' should be a vector of characters.")
+  }
+
+  # Check the input num_vars is a vector of column names of dataframe
+  if (!all(num_vars %in% colnames(df))) {
+    stop("The argument 'num_vars' should be a subset of the column names of the dataframe.")
+  }
+
+  # Find numerical columns and remove NA
+  df_num <- df[, num_vars]
+  df_num <- tidyr::drop_na(df_num)
 
   # Test colums to check if columns provided are numeric
   if (!all(sapply(df_num, is.numeric)))
