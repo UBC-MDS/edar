@@ -116,9 +116,40 @@ describe_num_var <- function(dataframe, num_vars) {
 #' describe_num_var(X, cat_vars)
 #'
 describe_cat_var <- function(dataframe, cat_vars) {
-  #TODO implement function
-  print(cat_vars)
+  # Check the input dataframe is a dataframe
+  if (!is.data.frame(dataframe)) {
+    stop("The value of the argument 'dataframe' should be of type 'data.frame' or 'tibble'.")
+  }
+
+  # Transform the input into tibble
+  dataframe <- as_tibble(dataframe)
+
+  # Chech the input cat_vars is a vector of characters
+  if (!is.character(cat_vars) | !is.vector(cat_vars)) {
+    stop("The value of the argument 'cat_vars' should be a vector of characters.")
+  }
+
+  # Check the input cat_vars is a vector of column names of dataframe
+  if (!all(cat_vars %in% colnames(dataframe))) {
+    stop("The argument 'cat_vars' should be a subset of the column names of the dataframe.")
+  }
+
+  # Select the categorical variables to work with
+  df <- dataframe %>%
+    select(cat_vars)
+
+  # Plot the faceted histogram
+  data_plot <- df %>%
+    drop_na() %>%
+    gather() %>%
+    ggplot(aes(x = value)) +
+    geom_bar(aes(y=..count..), color = 'gray',width = 0.6) +
+    facet_wrap(~ key, scales = "free", ncol = 3)+
+    ggtitle('Histogram of categorical variables')
+
+  return(data_plot)
 }
+
 
 
 #' Evaluates the correlation between the numeric columns of a given dataframe.
