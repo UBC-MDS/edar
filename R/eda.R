@@ -2,7 +2,9 @@
 
 library(tibble)
 library(dplyr)
+library(purrr)
 library(tidyr)
+
 
 #' This function generates an EDA report by plotting graphs and tables for the
 #' numeric variables, categorical variables, NA values and correlation in a dataframe
@@ -172,12 +174,38 @@ calc_cor <- function(df, num_vars) {
 #'
 #' @param dataframe the dataframe to be inspected.
 #'
-#' @return a list of vectors; each vector corresponds to a column and
-#' each value inside the vector is 0 if the corresponding value is NA,
+#' @return a tibble; each column corresponds to the same column in dataframe
+#'  and each value inside the columnr is 0 if the corresponding value is NA,
 #' 1 otherwise.
+
+#' stops if the object passed in is not a data.frame or tibble.
+#' @export
 #'
-#' TODO write meaningful examples as implementation goes on
+#' @examples
+#' df <- data.frame(x = (c(2,3,4)), y= c(1,10,3))
+#' col_num <- describe_na_values(df)
+#'
+#' #> # A tibble: 2 x 3
+#' #>       x     y
+#' #>   <int> <int>
+#' #> 1     1     1
+#' #> 2     1     1
+#' #> 3     1     1
+#'
+#'#' df <- data.frame(x = (c(2,NaN,4)), y= c(1,10,3))
+#' col_num <- describe_na_values(df)
+#'
+#'  #> # A tibble: 2 x 3
+#' #>       x     y
+#' #>   <int> <int>
+#' #> 1     1     1
+#' #> 2     0     1
+#' #> 3     1     1
+#'
 describe_na_values <- function(dataframe) {
-  #TODO implement function
-  list(c(0))
+  if (!is.data.frame(dataframe)) {
+    stop("The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
+  }
+  ret_dataframe <-purrr::map(dataframe, function(x){as.numeric(!is.na(x))})
+  ret_dataframe
 }
