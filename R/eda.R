@@ -151,6 +151,7 @@ calc_cor <- function(dataframe, num_vars) {
 #'  and each value inside the columnr is 0 if the corresponding value is NA,
 #' 1 otherwise.
 #'
+#' stops if the object passed in is not a data.frame or tibble.
 #' @export
 #'
 #' @examples
@@ -175,6 +176,9 @@ calc_cor <- function(dataframe, num_vars) {
 #' #> 3     1     1
 #'
 describe_na_values <- function(dataframe) {
+  if (!is.data.frame(dataframe)) {
+    stop("The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
+  }
   ret_dataframe <-purrr::map(dataframe, function(x){as.numeric(!is.na(x))})
   ret_dataframe
 }

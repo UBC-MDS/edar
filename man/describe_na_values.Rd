@@ -13,6 +13,8 @@ describe_na_values(dataframe)
 a tibble; each column corresponds to the same column in dataframe
  and each value inside the columnr is 0 if the corresponding value is NA,
 1 otherwise.
+
+stops if the object passed in is not a data.frame or tibble.
 }
 \description{
 evaluates a dataframe for NA values.
