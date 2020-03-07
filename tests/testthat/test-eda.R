@@ -1,8 +1,3 @@
-
-
-
-})
-
 #' Tests the describe_na_value function
 #'
 #' @return None. the function will not throw an error
@@ -10,7 +5,6 @@
 #'
 #' @examples
 #' test_describe_na_values ()
-
 test_describe_na_values <- function() {
   test_that("describe_na_value works", {
     no_na_tbl <- tibble::tibble(
@@ -24,7 +18,7 @@ test_describe_na_values <- function() {
       col2 = c(NaN, 0.4),
       col3 = c("a", "b")
     )
-    
+
     cat_na_tbl <- tibble::tibble(
       col1 = c(1, 2),
       col2 = c(0.5, 0.4),
@@ -67,8 +61,6 @@ test_describe_na_values <- function() {
         col3 = c(0, 1)
       )
     ))
-
-
   })
 
 }
@@ -256,25 +248,37 @@ test_describe_cat_var <- function() {
     expect_true(is.null(rlang::get_expr(result$mapping$y)))
   })
 
-  test_that("Corresponding error message should be expected if the dataframe argument is not a dataframe.", {
-    expect_error(describe_cat_var("abc", cat_var),
-                 regexp = "The value of the argument 'dataframe' should be of type 'data.frame' or 'tibble'.")
-  })
+  test_that(
+    "Corresponding error message should be expected if the dataframe argument is not a dataframe.",
+    {
+      expect_error(describe_cat_var("abc", cat_var),
+                   regexp = "The value of the argument 'dataframe' should be of type 'data.frame' or 'tibble'.")
+    }
+  )
 
-  test_that("Corresponding error message should be expected if the num_vars argument is not a vector", {
-    expect_error(describe_cat_var(test_data, test_data),
-                 regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
-  })
+  test_that(
+    "Corresponding error message should be expected if the num_vars argument is not a vector",
+    {
+      expect_error(describe_cat_var(test_data, test_data),
+                   regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
+    }
+  )
 
-  test_that("Corresponding error message should be expected if the num_vars argument is not a vector of charactors", {
-    expect_error(describe_cat_var(test_data, c(1, 2)),
-                 regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
-  })
+  test_that(
+    "Corresponding error message should be expected if the num_vars argument is not a vector of charactors",
+    {
+      expect_error(describe_cat_var(test_data, c(1, 2)),
+                   regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
+    }
+  )
 
-  test_that("Corresponding error message should be expected if the num_vars argument contains element that is not a column name", {
-    expect_error(describe_cat_var(test_data, c("num1", "abc")),
-                 regexp = "The argument 'cat_vars' should be a subset of the column names of the dataframe.")
-  })
+  test_that(
+    "Corresponding error message should be expected if the num_vars argument contains element that is not a column name",
+    {
+      expect_error(describe_cat_var(test_data, c("num1", "abc")),
+                   regexp = "The argument 'cat_vars' should be a subset of the column names of the dataframe.")
+    }
+  )
 
 }
 
