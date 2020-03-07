@@ -17,8 +17,19 @@
 #' generate_report(X, cat_vars, num_vars)
 #'
 generate_report <- function(dataframe, cat_vars, num_vars) {
-  #TODO implement function
+  try({
+    fun1 <- describe_num_var(dataframe, num_vars)
+    fun2 <- describe_cat_var(dataframe, cat_vars)
+    fun3 <- describe_na_values(dataframe)
+    fun4 <- calc_cor(dataframe, num_vars)
+  
+    print(list(fun1, fun2, fun3, fun4))
+    return(TRUE)
+  })
+  
+  return(FALSE)
 }
+
 
 
 #' Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, maximum and minimum for the numeric variables.

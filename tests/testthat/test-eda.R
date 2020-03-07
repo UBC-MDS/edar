@@ -1,10 +1,38 @@
+#' Tests the generate report function
+#'
+#' @return None. the function will not throw an error
+#' if the tests fail.
+#'
+#' @examples
+#' test_generate_report()
+test_generate_report <- function() {
+  data <- helper_create_data(200)
+  num_col <- c('num1', 'num2', 'num3')
+  cat_col <- c('cat1', 'cat2', 'cat3')
+  bad_col <- c('num1', 'num2', 'abc')
+  results <- generate_report(data, cat_col, num_col)
+  bad_results <- generate_report(data, cat_col, bad_col)
+  
+  # Tests that FALSE is returned when there is an error
+  test_that("FALSE is returned when there is an error", {
+    expect_true(bad_results == FALSE)
+  })
+  
+  # Tests that TRUE is returned when there is no error
+  test_that("Tests that TRUE is returned when there is no error", {
+    expect_true(results == TRUE)
+  })
+}
+
+test_generate_report()
+
 #' Tests the describe_na_value function
 #'
 #' @return None. the function will not throw an error
 #' if the tests fail.
 #'
 #' @examples
-#' test_describe_na_values ()
+#' test_describe_na_values()
 test_describe_na_values <- function() {
   test_that("describe_na_value works", {
     no_na_tbl <- tibble::tibble(
@@ -66,7 +94,7 @@ test_describe_na_values <- function() {
 }
 
 
-test_describe_na_values ()
+test_describe_na_values()
 
 #' Tests the correlation function to make sure output is rendered correctly
 #' or the function will fail with an error message and problem.
