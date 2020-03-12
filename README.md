@@ -7,6 +7,9 @@
 
 <!-- badges: start -->
 
+[![R build
+status](https://github.com/UBC-MDS/edar/workflows/R-CMD-check/badge.svg)](https://github.com/UBC-MDS/edar/actions)
+[![codecov](https://codecov.io/gh/UBC-MDS/edar/branch/master/graph/badge.svg)](https://codecov.io/gh/UBC-MDS/edar)
 <!-- badges: end -->
 
 ## Summary
