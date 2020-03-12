@@ -16,6 +16,7 @@ Suggests:
     testthat (>= 2.1.0),
     covr
 Imports: 
+    stringi,
     dplyr,
     tidyr,
     ggplot2,
@@ -23,5 +24,6 @@ Imports:
     tibble,
     ggcorrplot,
     rlang
+    
 URL: https://github.com/UBC-MDS/edar
 BugReports: https://github.com/UBC-MDS/edar/issues
