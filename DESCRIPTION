@@ -16,13 +16,15 @@ Suggests:
     testthat (>= 2.1.0),
     covr
 Imports: 
-    stringi,
-    dplyr,
+    rlang,
+    vctrs,
+    lifecycle,
+    pillar,
     tidyr,
-    ggplot2,
     purrr,
     tibble,
-    ggcorrplot,
-    rlang
+    dplyr,
+    ggplot2,
+    ggcorrplot
 URL: https://github.com/UBC-MDS/edar
 BugReports: https://github.com/UBC-MDS/edar/issues
