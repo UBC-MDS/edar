@@ -24,6 +24,5 @@ Imports:
     tibble,
     ggcorrplot,
     rlang
-    
 URL: https://github.com/UBC-MDS/edar
 BugReports: https://github.com/UBC-MDS/edar/issues
