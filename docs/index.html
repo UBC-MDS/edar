@@ -46,6 +46,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/edar-vignette.html">edar-vignette</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -88,13 +100,13 @@
 <a href="#functions" class="anchor"></a>Functions</h2>
 <ol>
 <li>
-<code>calc_cor</code>: This function will take in data frame and will plot correlation matrix of the features</li>
+<code>calc_cor</code>: This function will take in dataframe and will return correlation matrix of the features</li>
 <li>
-<code>describe_na_values</code> : This function will take in data frame and will plot heat map to locate NA values in each feature and will also give a table listing number of NA values in each feature.</li>
+<code>describe_na_values</code> : This function will take in dataframe and will give a table listing number of NA values in each feature.</li>
 <li>
-<code>describe_cat_var</code>: This function will take data frame and categorical variable names and will plot the histogram of each categorical variable</li>
+<code>describe_cat_var</code>: This function will take data frame and categorical variable names and will return the histogram of each categorical variable</li>
 <li>
-<code>describe_num_var</code>: This function will take data frame and numerical variable names and will plot the histogram of each numerical variable.</li>
+<code>describe_num_var</code>: This function will take data frame and numerical variable names and will return the histogram of each numerical variable.</li>
 <li>
 <code>generate_report</code>: This is a wrapper function which generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe</li>
 </ol>
@@ -156,7 +168,7 @@
 <a class="sourceLine" id="cb2-26" title="26"><span class="co">#&gt; 6 mean    15     12.667</span></a>
 <a class="sourceLine" id="cb2-27" title="27"><span class="co">#&gt; 7 sd      5      2.517</span></a>
 <a class="sourceLine" id="cb2-28" title="28">num_result<span class="op">$</span>plot</a></code></pre></div>
-<p><img src="reference/figures/README-example-1.png" width="100%"></p>
+<p>options(tidyverse.quiet = TRUE, repr.plot.width = 10, repr.plot.height = 10)</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="co"># Show the EDA for the categorical variables</span></a>
 <a class="sourceLine" id="cb3-3" title="3"><span class="kw"><a href="reference/describe_cat_var.html">describe_cat_var</a></span>(X, <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'type'</span>))</a></code></pre></div>
