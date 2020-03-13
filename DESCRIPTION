@@ -14,7 +14,9 @@ LazyData: true
 RoxygenNote: 7.0.2
 Suggests: 
     testthat (>= 2.1.0),
-    covr
+    covr,
+    knitr,
+    rmarkdown
 Imports: 
     rlang,
     vctrs,
@@ -28,3 +30,4 @@ Imports:
     ggcorrplot
 URL: https://github.com/UBC-MDS/edar
 BugReports: https://github.com/UBC-MDS/edar/issues
+VignetteBuilder: knitr
