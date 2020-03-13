@@ -1,0 +1,127 @@
+---
+title: "edar-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{edar-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+```
+
+Exploratory Data analysis is an important step in any data analysis. There are some general steps like describing the data, knowing NA values and plotting the distributions of the variables which are performed to understand the data well. All these tasks require a lot of coding effort. The package tries to address this issue by providing a single function which will generate a general exploratory data analysis report. 
+
+The edar data analysis report contains the following four functions:
+- `calc_cor`: This function will take in dataframe and will plot correlation matrix of the features
+
+- `describe_na_values` : This function will take in dataframe and willgive a table listing number of NA values in each feature.
+
+- `describe_cat_var`: This function will take data frame and categorical variable names and will plot the histogram of each categorical variable
+
+- `describe_num_var`: This function will take data frame and numerical variable names and will plot the histogram of each numerical variable.
+
+- `generate_report`: This is a wrapper function which generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe.
+
+This document will walk through an example problem to increase the understanding of the role of these functions to generate an exploratory analysis report.
+
+## Install and Load the Package
+
+You can download, build and install this package from GitHub with:
+
+`install.packages("devtools")`
+
+`devtools::install_github("UBC-MDS/edar")`
+
+You can load the package with: 
+
+```{r setup}
+library(edar)
+
+# The packages below are used to set up the example dataset
+library(dplyr)
+library(tidyr)
+```
+
+## Data: Iris
+
+This example uses a built-in R dataset known as [iris](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/iris) to show the use of our edar package. There is five features in the iris dataset: `Sepal.Length`, `Sepal.Width`, `Petal.Length`, `Petal.Width` and `Species`. Iris automatically loads as a `data.frame`, but if your data is not a dataframe, you will need to convert it to a data.frame or tibble using the `data.frame()` or `tibble()` function. For further details, see the instructions for [data.frame()](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/data.frame) and [tibble()](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
+
+```{r load data}
+library(datasets)
+
+dim(iris)
+is.data.frame(iris)
+
+head(iris)
+```
+
+## Using edar to Explore the Data
+There is 150 rows of data in the Iris dataset with 5 columns. 
+
+Questions that might arise before you do any analysis are:
+
+- How do we know that all the values are there?
+
+- Is there any outliers that need to be dealt with?
+
+- How many categories of data are there? 
+
+- Are the features correlated? 
+
+This package looks at answering the questions by exploring the different features and the values of the dataset. 
+
+### Identify Column Types
+For the package to work, users need to manually specify which columns are numeric and which columns are categorical. Numeric columns should only contain numerical values while categorical variables can be intergers specifying values (1- Yes, 2 - No) or strings. All the features in iris except for `Species` are numerical varaibles and `Species` is a categorical variable. 
+
+```{r Identify Column types}
+numerical_variables <- c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")
+categorical_Variables <- c("Species")
+```
+
+### 1. Find the Distribution of the Numeric Variables (describe_num_var)
+The first function run in the report is finding the distribution of numerical variables. Often in exploratory data analysis (EDA), the first step is to look at your data. This package splits up looking at your data to first look at numeric variables. This function takes a dataframe and numerical variable names and will plot the histogram of each numerical variable as well as return a dataframe with the summary values. The use to to find the range of values for a feature as well as the quantiles, minimum, maximum, mean and standard deviation. 
+
+In the Iris example, we are able to identify if there are any outliers in the data as well as the distributions. The iris dataset is clean and the values look reasonable for further analysis. 
+
+```{r describe_num_var}
+options(tidyverse.quiet = TRUE,
+        repr.plot.width = 10,
+        repr.plot.height = 10)
+describe_num_var(iris, numerical_variables)
+```
+
+### 2. Find the Distribution of the Categorical Variables (describe_cat_var)
+The function `describe_cat_var` works similar to `describe_num_var` except inspects the categorical variables. Since there is no summary statistics like mean, min, and standard deviation, this function will take dataframe and categorical variable names and will plot the histogram of each categorical variable. In the Iris example, the `Species` category is equally distributed between the three different species. 
+
+```{r describe_cat_var}
+describe_cat_var(iris, categorical_Variables)
+```
+
+### 3. Find the Count of NA Values (describe_na_values)
+`describe_na_values` takes in dataframe and will give a table listing number of NA values in each feature. NAs can often produce errors in data analysis, therefore idenitfying any NA values is important in the EDA process. Each column in the output corresponds to the same column in dataframe and each value inside the column is 0 if the corresponding value is NA, 1 otherwise. In the Iris example, there are no 0's meaning there are no NA values in the data. 
+
+```{r describe_na_values}
+describe_na_values(iris)
+```
+
+### 4. Find the Correlation (calc_cor)
+The function `calc_cor` takes in dataframe and will plot correlation matrix of the features. Identifying correlation is important in the EDA process, espeacially for identifying features for conducting regression analysis. The function returns a correlation matrix plot labelled with the correlation coefficients of -1 to 1 between each numeric column and other numeric columns in the dataframe. In the Iris example, there is values close to one for the correlation between `Petal.Length` and `Petal.Width` meaning that doing an analysis like regression with these two features will result in a low adjusted R-squared. 
+
+```{r calc_cor}
+calc_cor(iris, numerical_variables)
+```
+
+
+# Putting it all together: Generate Report (generate_report)
+All the functions in this package work together to give insights about the data before conducting an analysis. The package has a wrapper function that pulls the other functions all together for a simple report that outputs all the EDA analysis. The function generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe.
+
+```{r generate_report}
+generate_report(iris, categorical_Variables, numerical_variables)
+```
+
