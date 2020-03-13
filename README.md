@@ -52,14 +52,7 @@ typical graphical techniques.
 
 ## Installation
 
-You can install the released version of edar from
-[CRAN](https://CRAN.R-project.org) with:
-
-``` r
-install.packages("edar")
-```
-
-And the development version from [GitHub](https://github.com/) with:
+You can download, build and install this package from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
