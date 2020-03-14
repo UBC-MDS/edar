@@ -64,7 +64,9 @@ devtools::install_github("UBC-MDS/edar")
 ## Dependencies
 
   - R version 3.6.2 and R packages:
-      - rlang==0.4.2
+      - rlang==0.4.5
+      - vctrs==0.2.1
+      - lifecycle==0.1.0
       - dplyr==0.8.3
       - tibble==2.1.3
       - purrr==0.3.3
@@ -73,13 +75,20 @@ devtools::install_github("UBC-MDS/edar")
       - ggcorrplot==0.1.3
       - testthat==2.1.0
 
+## Vignette
+
+Please click
+[here](https://ubc-mds.github.io/edar/articles/edar-vignette.html) for
+the Vignette of this package.
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(edar)
-X <- dplyr::tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
+X <- dplyr::tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), 
+                   width = c(10, 15, 13), mpg = c(18, 10, 15))
 
 # Evaluates a dataframe for NA values
 describe_na_values(X)
@@ -90,6 +99,9 @@ describe_na_values(X)
 #> [1] 1 1 1
 #> 
 #> $width
+#> [1] 1 1 1
+#> 
+#> $mpg
 #> [1] 1 1 1
 
 # Show the EDA for the numeric variables
@@ -121,7 +133,7 @@ describe_cat_var(X, c('type'))
 ``` r
 
 # Plot the correlation matrix
-calc_cor(X, c('height', 'width'))
+calc_cor(X, c('height', 'width', 'mpg'))
 ```
 
 <img src="man/figures/README-example-3.png" width="100%" />
