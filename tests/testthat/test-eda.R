@@ -12,12 +12,12 @@ test_generate_report <- function() {
   bad_col <- c('num1', 'num2', 'abc')
   results <- generate_report(data, cat_col, num_col)
   bad_results <- generate_report(data, cat_col, bad_col)
-  
+
   # Tests that FALSE is returned when there is an error
   test_that("FALSE is returned when there is an error", {
     expect_true(bad_results == FALSE)
   })
-  
+
   # Tests that TRUE is returned when there is no error
   test_that("Tests that TRUE is returned when there is no error", {
     expect_true(results == TRUE)
@@ -59,10 +59,11 @@ test_describe_na_values <- function() {
       col3 = c("a", "b")
     )
 
-
+    # Tests that the correct error message is displayed if a non-dataframe object is passed to 'dataframe'.
     expect_error(describe_na_values(not_a_tbl),
                  regexp = "The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
 
+    # Tests that the output for a none NA tibble is correct.
     expect_true(dplyr::all_equal(
       edar::describe_na_values(no_na_tbl),
       tibble::tibble(
@@ -72,6 +73,7 @@ test_describe_na_values <- function() {
       )
     ))
 
+    # Tests that the output for a tibble with an NA value in numeric columns is correct.
     expect_true(dplyr::all_equal(
       edar::describe_na_values(numerical_na_tbl),
       tibble::tibble(
@@ -81,6 +83,7 @@ test_describe_na_values <- function() {
       )
     ))
 
+    # Tests that the output for a tibble with an NA value in categorical columns is correct.
     expect_true(dplyr::all_equal(
       edar::describe_na_values(cat_na_tbl),
       tibble::tibble(
@@ -289,20 +292,23 @@ test_describe_num_var()
 #' @examples
 #' test_describe_cat_var()
 test_describe_cat_var <- function() {
+  # Generate test data from the helper function.
   test_data <- helper_create_data(500)
   cat_var <- c('cat1', 'cat2', 'cat3')
   result <- describe_cat_var(test_data, cat_var)
 
-
+  # Test the plot type is correct.
   test_that("The returned plot should be a ggplot object.", {
     expect_true(is.ggplot(result))
   })
 
+  # Test the plot type is correct.
   test_that("The plot should be a bar chart and without y mapping.", {
     expect_true("GeomBar" %in% c(class(result$layers[[1]]$geom)))
     expect_true(is.null(rlang::get_expr(result$mapping$y)))
   })
 
+  # Test the error message is correct when the type of `dataframe` argument is wrong.
   test_that(
     "Corresponding error message should be expected if the dataframe argument is not a dataframe.",
     {
@@ -311,24 +317,27 @@ test_describe_cat_var <- function() {
     }
   )
 
+  # Test the error message is correct when the type of `cat_vars` argument is wrong.
   test_that(
-    "Corresponding error message should be expected if the num_vars argument is not a vector",
+    "Corresponding error message should be expected if the cat_vars argument is not a vector",
     {
       expect_error(describe_cat_var(test_data, test_data),
                    regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
     }
   )
 
+  # Test the error message is correct when the type of `cat_vars` argument is wrong.
   test_that(
-    "Corresponding error message should be expected if the num_vars argument is not a vector of charactors",
+    "Corresponding error message should be expected if the cat_vars argument is not a vector of charactors",
     {
       expect_error(describe_cat_var(test_data, c(1, 2)),
                    regexp = "The value of the argument 'cat_vars' should be a vector of characters.")
     }
   )
 
+  # Test the error message is correct when the type of `cat_vars` argument is not a subset of the column names of the dataframe.
   test_that(
-    "Corresponding error message should be expected if the num_vars argument contains element that is not a column name",
+    "Corresponding error message should be expected if the cat_vars argument contains element that is not a column name",
     {
       expect_error(describe_cat_var(test_data, c("num1", "abc")),
                    regexp = "The argument 'cat_vars' should be a subset of the column names of the dataframe.")

@@ -2,7 +2,7 @@
 % Please edit documentation in R/eda.R
 \name{generate_report}
 \alias{generate_report}
-\title{This function generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe}
+\title{Generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe}
 \usage{
 generate_report(dataframe, cat_vars, num_vars)
 }
@@ -17,7 +17,7 @@ generate_report(dataframe, cat_vars, num_vars)
 It returns True on successful execution else returns False
 }
 \description{
-This function generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe
+Generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe
 }
 \examples{
 X <- dplyr::tibble(type = c('Car','Bus','Car'), height = c(10,20,30))

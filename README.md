@@ -35,22 +35,26 @@ typical graphical techniques.
 
 ## Functions
 
-1. `calc_cor`: This function takes in a data frame and numeric variable names 
-and returns the correlation matrix for numerical variables.
-2. `describe_na_values` : This function takes in a data frame and returns a 
-table listing with the number of NA values in each feature.
-3. `describe_cat_var`: This function takes in a data frame and categorical variable 
-names and returns the histogram of each categorical variable.
-4. `describe_num_var`: This function takes in a data frame and numerical variable names 
-and returns the histogram of each numerical variable and summary statistics such as the 
-mean, median, maximum and minimum for the numeric variables.
-5. `generate_report`: This is a wrapper function which generates an EDA report by 
-plotting graphs and tables for the numeric variables, categorical variables, NA values 
-and correlation in a data frame.
+1.  `calc_cor`: This function takes in a data frame and numeric variable
+    names and returns the correlation matrix for numerical variables.
+2.  `describe_na_values` : This function takes in a data frame and
+    returns a table listing with the number of NA values in each
+    feature.
+3.  `describe_cat_var`: This function takes in a data frame and
+    categorical variable names and returns the histogram of each
+    categorical variable.
+4.  `describe_num_var`: This function takes in a data frame and
+    numerical variable names and returns the histogram of each numerical
+    variable and summary statistics such as the mean, median, maximum
+    and minimum for the numeric variables.
+5.  `generate_report`: This is a wrapper function which generates an EDA
+    report by plotting graphs and tables for the numeric variables,
+    categorical variables, NA values and correlation in a data frame.
 
 ## Installation
 
-You can download, build and install this package from [GitHub](https://github.com/) with:
+You can download, build and install this package from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -60,7 +64,9 @@ devtools::install_github("UBC-MDS/edar")
 ## Dependencies
 
   - R version 3.6.2 and R packages:
-      - rlang==0.4.2
+      - rlang==0.4.5
+      - vctrs==0.2.1
+      - lifecycle==0.1.0
       - dplyr==0.8.3
       - tibble==2.1.3
       - purrr==0.3.3
@@ -69,13 +75,20 @@ devtools::install_github("UBC-MDS/edar")
       - ggcorrplot==0.1.3
       - testthat==2.1.0
 
+## Vignette
+
+Please click
+[here](https://ubc-mds.github.io/edar/articles/edar-vignette.html) for
+the Vignette of this package.
+
 ## Example
 
 This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(edar)
-X <- dplyr::tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
+X <- dplyr::tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), 
+                   width = c(10, 15, 13), mpg = c(18, 10, 15))
 
 # Evaluates a dataframe for NA values
 describe_na_values(X)
@@ -86,6 +99,9 @@ describe_na_values(X)
 #> [1] 1 1 1
 #> 
 #> $width
+#> [1] 1 1 1
+#> 
+#> $mpg
 #> [1] 1 1 1
 
 # Show the EDA for the numeric variables
@@ -104,9 +120,7 @@ num_result$summary
 num_result$plot
 ```
 
-options(tidyverse.quiet = TRUE,
-        repr.plot.width = 10,
-        repr.plot.height = 10)
+<img src="man/figures/README-example-1.png" width="100%" />
 
 ``` r
 
@@ -119,7 +133,7 @@ describe_cat_var(X, c('type'))
 ``` r
 
 # Plot the correlation matrix
-calc_cor(X, c('height', 'width'))
+calc_cor(X, c('height', 'width', 'mpg'))
 ```
 
 <img src="man/figures/README-example-3.png" width="100%" />
