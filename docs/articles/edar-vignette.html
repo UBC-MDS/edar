@@ -90,14 +90,15 @@
     
     
 <p>Exploratory Data analysis is an important step in any data analysis. There are some general steps like describing the data, knowing NA values and plotting the distributions of the variables which are performed to understand the data well. All these tasks require a lot of coding effort. The package tries to address this issue by providing a single function which will generate a general exploratory data analysis report.</p>
-<p>The edar data analysis report contains the following four functions: - <code>calc_cor</code>: This function will take in dataframe and will plot correlation matrix of the features</p>
-<ul>
-<li><p><code>describe_na_values</code> : This function will take in dataframe and willgive a table listing number of NA values in each feature.</p></li>
-<li><p><code>describe_cat_var</code>: This function will take data frame and categorical variable names and will plot the histogram of each categorical variable</p></li>
-<li><p><code>describe_num_var</code>: This function will take data frame and numerical variable names and will plot the histogram of each numerical variable.</p></li>
-<li><p><code>generate_report</code>: This is a wrapper function which generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe.</p></li>
-</ul>
-<p>This document will walk through an example problem to increase the understanding of the role of these functions to generate an exploratory analysis report.</p>
+<p>The edar data analysis report contains the following five functions:</p>
+<ol style="list-style-type: decimal">
+<li><p><code>calc_cor</code>: This function takes in a data frame and numeric variable names and returns the correlation matrix for numerical variables.</p></li>
+<li><p><code>describe_na_values</code> : This function takes in a data frame and returns a table listing with the number of NA values in each feature.</p></li>
+<li><p><code>describe_cat_var</code>: This function takes in a data frame and categorical variable names and returns the histogram of each categorical variable.</p></li>
+<li><p><code>describe_num_var</code>: This function takes in a data frame and numerical variable names and returns the histogram of each numerical variable and summary statistics such as the mean, median, maximum and minimum for the numeric variables.</p></li>
+<li><p><code>generate_report</code>: This is a wrapper function which generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a data frame.</p></li>
+</ol>
+<p>This document will walk through an example problem to increase the understanding of the role of these functions to generate an exploratory data analysis report.</p>
 <div id="install-and-load-the-package" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install-and-load-the-package" class="anchor"></a>Install and Load the Package</h2>
@@ -154,7 +155,7 @@
 <div id="identify-column-types" class="section level3">
 <h3 class="hasAnchor">
 <a href="#identify-column-types" class="anchor"></a>Identify Column Types</h3>
-<p>For the package to work, users need to manually specify which columns are numeric and which columns are categorical. Numeric columns should only contain numerical values while categorical variables can be intergers specifying values (1- Yes, 2 - No) or strings. All the features in iris except for <code>Species</code> are numerical varaibles and <code>Species</code> is a categorical variable.</p>
+<p>For the package to work, users need to manually specify which columns are numeric and which columns are categorical. Numeric columns should only contain numerical values while categorical variables can be intergers specifying values (1- Yes, 2 - No) or strings. All the features in Iris except for <code>Species</code> are numerical varaibles and <code>Species</code> is a categorical variable.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">numerical_variables &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Sepal.Width"</span>, <span class="st">"Petal.Length"</span>, <span class="st">"Petal.Width"</span>)</a>
 <a class="sourceLine" id="cb3-2" title="2">categorical_Variables &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Species"</span>)</a></code></pre></div>
 </div>

@@ -17,18 +17,26 @@ knitr::opts_chunk$set(
 
 Exploratory Data analysis is an important step in any data analysis. There are some general steps like describing the data, knowing NA values and plotting the distributions of the variables which are performed to understand the data well. All these tasks require a lot of coding effort. The package tries to address this issue by providing a single function which will generate a general exploratory data analysis report. 
 
-The edar data analysis report contains the following four functions:
-- `calc_cor`: This function will take in dataframe and will plot correlation matrix of the features
+The edar data analysis report contains the following five functions:
 
-- `describe_na_values` : This function will take in dataframe and willgive a table listing number of NA values in each feature.
+1. `calc_cor`: This function takes in a data frame and numeric variable names 
+and returns the correlation matrix for numerical variables.
 
-- `describe_cat_var`: This function will take data frame and categorical variable names and will plot the histogram of each categorical variable
+2. `describe_na_values` : This function takes in a data frame and returns a 
+table listing with the number of NA values in each feature.
 
-- `describe_num_var`: This function will take data frame and numerical variable names and will plot the histogram of each numerical variable.
+3. `describe_cat_var`: This function takes in a data frame and categorical variable 
+names and returns the histogram of each categorical variable.
 
-- `generate_report`: This is a wrapper function which generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe.
+4. `describe_num_var`: This function takes in a data frame and numerical variable names 
+and returns the histogram of each numerical variable and summary statistics such as the 
+mean, median, maximum and minimum for the numeric variables.
 
-This document will walk through an example problem to increase the understanding of the role of these functions to generate an exploratory analysis report.
+5. `generate_report`: This is a wrapper function which generates an EDA report by 
+plotting graphs and tables for the numeric variables, categorical variables, NA values 
+and correlation in a data frame.
+
+This document will walk through an example problem to increase the understanding of the role of these functions to generate an exploratory data analysis report.
 
 ## Install and Load the Package
 
@@ -77,7 +85,7 @@ Questions that might arise before you do any analysis are:
 This package looks at answering the questions by exploring the different features and the values of the dataset. 
 
 ### Identify Column Types
-For the package to work, users need to manually specify which columns are numeric and which columns are categorical. Numeric columns should only contain numerical values while categorical variables can be intergers specifying values (1- Yes, 2 - No) or strings. All the features in iris except for `Species` are numerical varaibles and `Species` is a categorical variable. 
+For the package to work, users need to manually specify which columns are numeric and which columns are categorical. Numeric columns should only contain numerical values while categorical variables can be intergers specifying values (1- Yes, 2 - No) or strings. All the features in Iris except for `Species` are numerical varaibles and `Species` is a categorical variable. 
 
 ```{r Identify Column types}
 numerical_variables <- c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")

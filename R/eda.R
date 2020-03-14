@@ -1,6 +1,6 @@
 # author Group 4 Isaac Newton
 
-#' This function generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe
+#' Generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param cat_vars vector of character strings of the names of the categorical variables.
@@ -31,8 +31,8 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 }
 
 
-
-#' Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, maximum and minimum for the numeric variables.
+#' Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, 
+#' maximum and minimum for the numeric variables.
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param num_vars vector of character strings of the names of the numeric variables.
@@ -43,6 +43,7 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 #' @import dplyr
 #' @import tidyr
 #' @import ggplot2
+#' @import rlang
 #' @importFrom stats median quantile sd
 #' @export
 #'
@@ -111,7 +112,7 @@ describe_num_var <- function(dataframe, num_vars) {
 }
 
 
-#' This function will take data frame and categorical variable names and will plot the histogram of each categorical variable.
+#' Finds the frequency of the categorical variables in a data frame and returns the histogram of each categorical variable.
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param cat_vars vector of character strings of the names of the categorical variables.
@@ -228,13 +229,13 @@ calc_cor <- function(df, num_vars) {
 }
 
 
-#' evaluates a dataframe for NA values.
+#' Evaluates a dataframe for NA values.
 #'
 #' @param dataframe the dataframe to be inspected.
 #'
-#' @return a tibble; each column corresponds to the same column in dataframe and each value inside the columnr is 0 if the corresponding value is NA, 1 otherwise.
-
+#' @return a tibble; each column corresponds to the same column in dataframe and each value inside the column is 0 if the corresponding value is NA, 1 otherwise.
 #' stops if the object passed in is not a data.frame or tibble.
+#' 
 #' @export
 #'
 #' @examples
