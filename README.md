@@ -35,22 +35,26 @@ typical graphical techniques.
 
 ## Functions
 
-1. `calc_cor`: This function takes in a data frame and numeric variable names 
-and returns the correlation matrix for numerical variables.
-2. `describe_na_values` : This function takes in a data frame and returns a 
-table listing with the number of NA values in each feature.
-3. `describe_cat_var`: This function takes in a data frame and categorical variable 
-names and returns the histogram of each categorical variable.
-4. `describe_num_var`: This function takes in a data frame and numerical variable names 
-and returns the histogram of each numerical variable and summary statistics such as the 
-mean, median, maximum and minimum for the numeric variables.
-5. `generate_report`: This is a wrapper function which generates an EDA report by 
-plotting graphs and tables for the numeric variables, categorical variables, NA values 
-and correlation in a data frame.
+1.  `calc_cor`: This function takes in a data frame and numeric variable
+    names and returns the correlation matrix for numerical variables.
+2.  `describe_na_values` : This function takes in a data frame and
+    returns a table listing with the number of NA values in each
+    feature.
+3.  `describe_cat_var`: This function takes in a data frame and
+    categorical variable names and returns the histogram of each
+    categorical variable.
+4.  `describe_num_var`: This function takes in a data frame and
+    numerical variable names and returns the histogram of each numerical
+    variable and summary statistics such as the mean, median, maximum
+    and minimum for the numeric variables.
+5.  `generate_report`: This is a wrapper function which generates an EDA
+    report by plotting graphs and tables for the numeric variables,
+    categorical variables, NA values and correlation in a data frame.
 
 ## Installation
 
-You can download, build and install this package from [GitHub](https://github.com/) with:
+You can download, build and install this package from
+[GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -104,9 +108,7 @@ num_result$summary
 num_result$plot
 ```
 
-options(tidyverse.quiet = TRUE,
-        repr.plot.width = 10,
-        repr.plot.height = 10)
+<img src="man/figures/README-example-1.png" width="100%" />
 
 ``` r
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/eda.R
 \name{describe_na_values}
 \alias{describe_na_values}
-\title{evaluates a dataframe for NA values.}
+\title{Evaluates a dataframe for NA values.}
 \usage{
 describe_na_values(dataframe)
 }
@@ -10,11 +10,11 @@ describe_na_values(dataframe)
 \item{dataframe}{the dataframe to be inspected.}
 }
 \value{
-a tibble; each column corresponds to the same column in dataframe and each value inside the columnr is 0 if the corresponding value is NA, 1 otherwise.
+a tibble; each column corresponds to the same column in dataframe and each value inside the column is 0 if the corresponding value is NA, 1 otherwise.
 stops if the object passed in is not a data.frame or tibble.
 }
 \description{
-evaluates a dataframe for NA values.
+Evaluates a dataframe for NA values.
 }
 \examples{
 df <- data.frame(x = (c(2,3,4)), y= c(1,10,3))

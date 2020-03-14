@@ -63,7 +63,7 @@ devtools::install_github("UBC-MDS/edar")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r example, fig.height=5, fig.width=10}
 library(edar)
 X <- dplyr::tibble(type = c('Car', 'Bus', 'Car'), height = c(10, 20, 15), width = c(10, 15, 13))
 
