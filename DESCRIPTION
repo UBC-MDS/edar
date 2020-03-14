@@ -2,11 +2,19 @@ Package: edar
 Title: EDA
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Isaac",
-           family = "Newton",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    c(person(given = "Cheng",
+           family = "Min",
+           role = c("aut", "cre", "ctb", "cph"),
+           email = "marvin.cmin@gmail.com"),
+       person(given = "Yi",
+           family = "Liu",
+           role = c("aut", "ctb", "cph")),
+        person(given = "Gaurav",
+           family = "Sinha",
+           role = c("aut", "ctb", "cph")),
+        person(given = "Sarah",
+           family = "Weber",
+           role = c("aut", "ctb", "cph")))
 Description: Conduct initial EDA for exploring data in a dataframe.
 License: MIT + file LICENSE
 Encoding: UTF-8
