@@ -2,7 +2,7 @@
 % Please edit documentation in R/eda.R
 \name{describe_num_var}
 \alias{describe_num_var}
-\title{Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, 
+\title{Provides statistical summary of the numeric variables for a dataframe, such as the mean, median,
 maximum and minimum for the numeric variables.}
 \usage{
 describe_num_var(dataframe, num_vars)
@@ -10,13 +10,13 @@ describe_num_var(dataframe, num_vars)
 \arguments{
 \item{dataframe}{tbl. The dataframe to be inspected.}
 
-\item{num_vars}{vector of character strings of the names of the numeric variables.}
+\item{num_vars}{vector of character strings of the names of the numeric variables the user want to explore.}
 }
 \value{
 list. A list containing a dataframe with a statistical summary and a ggplot object with histograms of numeric variables faceted by each variable.
 }
 \description{
-Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, 
+Provides statistical summary of the numeric variables for a dataframe, such as the mean, median,
 maximum and minimum for the numeric variables.
 }
 \examples{
