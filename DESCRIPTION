@@ -26,7 +26,6 @@ Suggests:
     knitr,
     rmarkdown
 Imports: 
-    Rcpp,
     rlang,
     vctrs,
     lifecycle,
