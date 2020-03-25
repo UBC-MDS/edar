@@ -156,6 +156,7 @@ describe_cat_var <- function(dataframe, cat_vars) {
     ggplot(aes(x = value)) +
     geom_bar(aes(y=..count..), color = 'gray',width = 0.6) +
     facet_wrap(~ key, scales = "free", ncol = 3)+
+    theme(axis.text.x = element_text(angle = 90))+
     ggtitle('Histogram of categorical variables')
 
   return(data_plot)
