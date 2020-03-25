@@ -45,21 +45,21 @@ You can download, build and install this package from [GitHub](https://github.co
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("UBC-MDS/edar")
+devtools::install_github("UBC-MDS/edar", dependencies=TRUE)
 ```
 
 ## Dependencies
 - R version 3.6.2 and R packages:
-  - rlang==0.4.5
-  - vctrs==0.2.1
-  - lifecycle==0.1.0
-  - dplyr==0.8.3
-  - tibble==2.1.3
-  - purrr==0.3.3
-  - ggplot2==3.2.1
-  - tidyr==1.0.0
-  - ggcorrplot==0.1.3
-  - testthat==2.1.0 
+  - [rlang==0.4.5](https://rlang.r-lib.org/)
+  - [vctrs==0.2.1](https://cran.r-project.org/web/packages/vctrs/readme/README.html)
+  - [lifecycle==0.1.0](https://cran.r-project.org/web/packages/lifecycle/vignettes/lifecycle.html)
+  - [dplyr==0.8.3](https://dplyr.tidyverse.org/)
+  - [tibble==2.1.3](https://tibble.tidyverse.org/)
+  - [purrr==0.3.3](https://purrr.tidyverse.org/)
+  - [ggplot2==3.2.1](https://ggplot2.tidyverse.org/)
+  - [tidyr==1.0.0](https://tidyr.tidyverse.org/)
+  - [ggcorrplot==0.1.3](http://www.sthda.com/english/wiki/ggcorrplot-visualization-of-a-correlation-matrix-using-ggplot2)
+  - [testthat==2.1.0](https://testthat.r-lib.org/)
 
 ## Vignette
 

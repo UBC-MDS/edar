@@ -44,7 +44,8 @@ You can download, build and install this package from GitHub with:
 
 `install.packages("devtools")`
 
-`devtools::install_github("UBC-MDS/edar")`
+`devtools::install_github("UBC-MDS/edar", dependencies=TRUE)`
+
 
 You can load the package with: 
 
@@ -70,13 +71,13 @@ head(iris)
 ```
 
 ## Using edar to Explore the Data
-There is 150 rows of data in the Iris dataset with 5 columns. 
+There are 150 rows of data in the Iris dataset with 5 columns. 
 
 Questions that might arise before you do any analysis are:
 
 - How do we know that all the values are there?
 
-- Is there any outliers that need to be dealt with?
+- Are there any outliers that need to be dealt with?
 
 - How many categories of data are there? 
 
@@ -85,7 +86,7 @@ Questions that might arise before you do any analysis are:
 This package looks at answering the questions by exploring the different features and the values of the dataset. 
 
 ### Identify Column Types
-For the package to work, users need to manually specify which columns are numeric and which columns are categorical. Numeric columns should only contain numerical values while categorical variables can be intergers specifying values (1- Yes, 2 - No) or strings. All the features in Iris except for `Species` are numerical varaibles and `Species` is a categorical variable. 
+For the package to work, users need to manually specify which columns are numeric and which columns are categorical. Numeric columns should only contain numerical values while categorical variables can be integers specifying values (1- Yes, 2 - No) or strings. All the features in Iris except for `Species` are numerical variables and `Species` is a categorical variable. 
 
 ```{r Identify Column types}
 numerical_variables <- c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width")
@@ -93,9 +94,9 @@ categorical_Variables <- c("Species")
 ```
 
 ### 1. Find the Distribution of the Numeric Variables (describe_num_var)
-The first function run in the report is finding the distribution of numerical variables. Often in exploratory data analysis (EDA), the first step is to look at your data. This package splits up looking at your data to first look at numeric variables. This function takes a dataframe and numerical variable names and will plot the histogram of each numerical variable as well as return a dataframe with the summary values. The use to to find the range of values for a feature as well as the quantiles, minimum, maximum, mean and standard deviation. 
+The first function run in the report is finding the distribution of numerical variables. Often in exploratory data analysis (EDA), the first step is to look at your data. This package splits up looking at your data to first look at numeric variables. This function takes a dataframe and numerical variable names and will plot the histogram of each numerical variable as well as return a dataframe with the summary values. The use to find the range of values for a feature as well as the quantiles, minimum, maximum, mean and standard deviation. 
 
-In the Iris example, we are able to identify if there are any outliers in the data as well as the distributions. The iris dataset is clean and the values look reasonable for further analysis. 
+In the Iris example, we can identify if there are any outliers in the data as well as the distributions. The iris dataset is clean, and the values look reasonable for further analysis. 
 
 ```{r describe_num_var}
 options(tidyverse.quiet = TRUE,
@@ -112,7 +113,7 @@ describe_cat_var(iris, categorical_Variables)
 ```
 
 ### 3. Find the Count of NA Values (describe_na_values)
-`describe_na_values` takes in dataframe and will give a table listing number of NA values in each feature. NAs can often produce errors in data analysis, therefore idenitfying any NA values is important in the EDA process. Each column in the output corresponds to the same column in dataframe and each value inside the column is 0 if the corresponding value is NA, 1 otherwise. In the Iris example, there are no 0's meaning there are no NA values in the data. 
+`describe_na_values` takes in dataframe and will give a table listing number of NA values in each feature. NAs can often produce errors in data analysis, therefore identifying any NA values is important in the EDA process. Each column in the output corresponds to the same column in dataframe and each value inside the column is 0 if the corresponding value is NA, 1 otherwise. In the Iris example, there are no 0's meaning there are no NA values in the data. 
 
 ```{r describe_na_values}
 describe_na_values(iris)
