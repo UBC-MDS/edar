@@ -17,13 +17,13 @@ helper_create_data <- function(n){
   vals = c('cat','dog','lion')
 
   t <- tibble(
-    num1 = rexp(n, 3),
-    num2 = rnorm(n, 2, 2),
-    num3 = rnorm(n, 10, 3),
-    cat1 = as.character(rbinom(n, 1, 0.7)),
-    cat2 = as.character(rpois(n, 1)),
-    cat3 = as.character(rbinom(n, 5, 0.4)),
-    cat4 = sample(vals,n,replace=TRUE)
+    num1 <- rexp(n, 3),
+    num2 <- rnorm(n, 2, 2),
+    num3 <- rnorm(n, 10, 3),
+    cat1 <- as.character(rbinom(n, 1, 0.7)),
+    cat2 <- as.character(rpois(n, 1)),
+    cat3 <- as.character(rbinom(n, 5, 0.4)),
+    cat4 <- sample(vals,n,replace=TRUE)
   )
   t$num1[index1] <- NA
   t$cat2[index2] <- NA
