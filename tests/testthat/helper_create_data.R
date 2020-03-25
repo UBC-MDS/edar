@@ -14,7 +14,7 @@ helper_create_data <- function(n){
   index1 <- sample(1:n, 0.05*n, replace=F)
   index2 <- sample(1:n, 0.05*n, replace=F)
 
-  vals = c('cat','dog','lion')
+  vals <- c('cat','dog','lion')
 
   t <- tibble(
     num1 = rexp(n, 3),
@@ -29,4 +29,3 @@ helper_create_data <- function(n){
   t$cat2[index2] <- NA
   return(t)
 }
-
