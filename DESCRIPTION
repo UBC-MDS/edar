@@ -2,23 +2,40 @@ Package: edar
 Title: EDA
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Isaac",
-           family = "Newton",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    c(person(given = "Cheng",
+           family = "Min",
+           role = c("aut", "cre", "ctb", "cph"),
+           email = "marvin.cmin@gmail.com"),
+       person(given = "Yi",
+           family = "Liu",
+           role = c("aut", "ctb", "cph")),
+        person(given = "Gaurav",
+           family = "Sinha",
+           role = c("aut", "ctb", "cph")),
+        person(given = "Sarah",
+           family = "Weber",
+           role = c("aut", "ctb", "cph")))
 Description: Conduct initial EDA for exploring data in a dataframe.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    covr,
+    knitr,
+    rmarkdown
 Imports: 
-    dplyr,
+    rlang,
+    vctrs,
+    lifecycle,
+    pillar,
     tidyr,
-    ggplot2,
     purrr,
     tibble,
-    ggcorrplot,
-    rlang
+    dplyr,
+    ggplot2,
+    ggcorrplot
+URL: https://github.com/UBC-MDS/edar
+BugReports: https://github.com/UBC-MDS/edar/issues
+VignetteBuilder: knitr

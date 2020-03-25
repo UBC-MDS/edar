@@ -1,6 +1,6 @@
 # author Group 4 Isaac Newton
 
-#' This function generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe
+#' Generates an EDA report by plotting graphs and tables for the numeric variables, categorical variables, NA values and correlation in a dataframe
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param cat_vars vector of character strings of the names of the categorical variables.
@@ -17,14 +17,25 @@
 #' generate_report(X, cat_vars, num_vars)
 #'
 generate_report <- function(dataframe, cat_vars, num_vars) {
-  #TODO implement function
+  try({
+    fun1 <- describe_num_var(dataframe, num_vars)
+    fun2 <- describe_cat_var(dataframe, cat_vars)
+    fun3 <- describe_na_values(dataframe)
+    fun4 <- calc_cor(dataframe, num_vars)
+
+    print(list(fun1, fun2, fun3, fun4))
+    return(TRUE)
+  })
+
+  return(FALSE)
 }
 
 
-#' Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, maximum and minimum for the numeric variables.
+#' Provides statistical summary of the numeric variables for a dataframe, such as the mean, median,
+#' maximum and minimum for the numeric variables.
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
-#' @param num_vars vector of character strings of the names of the numeric variables.
+#' @param num_vars vector of character strings of the names of the numeric variables the user want to explore.
 #'
 #' @return list. A list containing a dataframe with a statistical summary and a ggplot object with histograms of numeric variables faceted by each variable.
 #'
@@ -32,6 +43,7 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
 #' @import dplyr
 #' @import tidyr
 #' @import ggplot2
+#' @import rlang
 #' @importFrom stats median quantile sd
 #' @export
 #'
@@ -66,7 +78,7 @@ describe_num_var <- function(dataframe, num_vars) {
     select(num_vars)
 
   # Check if only the numeric variables are selected
-  if (!all(sapply(df, is.numeric))) {
+  if (!all(vapply(df, is.numeric, FUN.VALUE = logical(1)))) {
     stop("Only numeric columns expected, please check the input.")
   }
 
@@ -74,10 +86,10 @@ describe_num_var <- function(dataframe, num_vars) {
   stat_funs <- c(min, max, median, mean, sd)
   temp <- c()
   for (item in stat_funs) {
-    data_stat <- sapply(df, item, na.rm = TRUE)
+    data_stat <- vapply(df, item, na.rm = TRUE, FUN.VALUE = numeric(1))
     temp <- rbind(temp, data_stat)
   }
-  data_quantile <- sapply(df, quantile, na.rm = TRUE)
+  data_quantile <- vapply(df, quantile, na.rm = TRUE, FUN.VALUE = numeric(5))
 
   # Get the 25% and 75% quantiles
   quantile_025 <- data_quantile[2, ]
@@ -100,7 +112,7 @@ describe_num_var <- function(dataframe, num_vars) {
 }
 
 
-#' This function will take data frame and categorical variable names and will plot the histogram of each categorical variable.
+#' Finds the frequency of the categorical variables in a data frame and returns the histogram of each categorical variable.
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
 #' @param cat_vars vector of character strings of the names of the categorical variables.
@@ -166,14 +178,33 @@ describe_cat_var <- function(dataframe, cat_vars) {
 #' calc_cor(df, col_num)
 #'
 calc_cor <- function(df, num_vars) {
+  # Check the input num_vars is a vector of characters
+  if (!is.character(num_vars) | !is.vector(num_vars)) {
+    stop("The value of the argument 'num_vars' should be a vector of characters.")
+  }
+
   # Test dataframe input to check if dataframe is a dataframe
   if (!is.data.frame(df))
     stop("Input 'df' should be a dataframe.")
 
-  # Find numerical columns and remove NA
-  df_num <- df[,num_vars]
-  df_num <- tidyr::drop_na(df_num)
+  # Check the input dataframe is a dataframe
+  if (!is.data.frame(df)) {
+    stop("The value of the argument 'dataframe' should be of type  'data.frame' or 'tibble'.")
+  }
 
+  # Check the input num_vars is a vector of characters
+  if (!is.character(num_vars) | !is.vector(num_vars)) {
+    stop("The value of the argument 'num_vars' should be a vector of characters.")
+  }
+
+  # Check the input num_vars is a vector of column names of dataframe
+  if (!all(num_vars %in% colnames(df))) {
+    stop("The argument 'num_vars' should be a subset of the column names of the dataframe.")
+  }
+
+  # Find numerical columns and remove NA
+  df_num <- df[, num_vars]
+  df_num <- tidyr::drop_na(df_num)
 
   # Test colums to check if columns provided are numeric
   if (!all(sapply(df_num, is.numeric)))
@@ -198,13 +229,13 @@ calc_cor <- function(df, num_vars) {
 }
 
 
-#' evaluates a dataframe for NA values.
+#' Evaluates a dataframe for NA values.
 #'
 #' @param dataframe the dataframe to be inspected.
 #'
-#' @return a tibble; each column corresponds to the same column in dataframe and each value inside the columnr is 0 if the corresponding value is NA, 1 otherwise.
-
+#' @return a tibble; each column corresponds to the same column in dataframe and each value inside the column is 0 if the corresponding value is NA, 1 otherwise.
 #' stops if the object passed in is not a data.frame or tibble.
+#'
 #' @export
 #'
 #' @examples
