@@ -22,20 +22,20 @@ generate_report <- function(dataframe, cat_vars, num_vars) {
     fun2 <- describe_cat_var(dataframe, cat_vars)
     fun3 <- describe_na_values(dataframe)
     fun4 <- calc_cor(dataframe, num_vars)
-  
+
     print(list(fun1, fun2, fun3, fun4))
     return(TRUE)
   })
-  
+
   return(FALSE)
 }
 
 
-#' Provides statistical summary of the numeric variables for a dataframe, such as the mean, median, 
+#' Provides statistical summary of the numeric variables for a dataframe, such as the mean, median,
 #' maximum and minimum for the numeric variables.
 #'
 #' @param dataframe tbl. The dataframe to be inspected.
-#' @param num_vars vector of character strings of the names of the numeric variables.
+#' @param num_vars vector of character strings of the names of the numeric variables the user want to explore.
 #'
 #' @return list. A list containing a dataframe with a statistical summary and a ggplot object with histograms of numeric variables faceted by each variable.
 #'
@@ -78,7 +78,7 @@ describe_num_var <- function(dataframe, num_vars) {
     select(num_vars)
 
   # Check if only the numeric variables are selected
-  if (!all(sapply(df, is.numeric))) {
+  if (!all(vapply(df, is.numeric, FUN.VALUE = logical(1)))) {
     stop("Only numeric columns expected, please check the input.")
   }
 
@@ -86,10 +86,10 @@ describe_num_var <- function(dataframe, num_vars) {
   stat_funs <- c(min, max, median, mean, sd)
   temp <- c()
   for (item in stat_funs) {
-    data_stat <- sapply(df, item, na.rm = TRUE)
+    data_stat <- vapply(df, item, na.rm = TRUE, FUN.VALUE = numeric(1))
     temp <- rbind(temp, data_stat)
   }
-  data_quantile <- sapply(df, quantile, na.rm = TRUE)
+  data_quantile <- vapply(df, quantile, na.rm = TRUE, FUN.VALUE = numeric(5))
 
   # Get the 25% and 75% quantiles
   quantile_025 <- data_quantile[2, ]
@@ -235,7 +235,7 @@ calc_cor <- function(df, num_vars) {
 #'
 #' @return a tibble; each column corresponds to the same column in dataframe and each value inside the column is 0 if the corresponding value is NA, 1 otherwise.
 #' stops if the object passed in is not a data.frame or tibble.
-#' 
+#'
 #' @export
 #'
 #' @examples
